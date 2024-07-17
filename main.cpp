@@ -1,9 +1,8 @@
-#include "NoteState.hpp"
+#include "note_state.h"
 #include <iostream>
 
-using namespace std;
-
 int main() {
-  cout << "No notes played!" << endl;
+  chordless::NoteState note_state;
+  std::cout << "No notes played!" << std::endl;
   return 0;
 }
