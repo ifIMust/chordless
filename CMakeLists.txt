@@ -20,15 +20,16 @@ FetchContent_MakeAvailable(googletest)
 
 
 add_library(note_state note_state.cc note_state.h)
+add_library(note_event note_event.cc note_event.h)
 
 include(CTest)
 add_executable(test_note_state test_note_state.cc)
 target_link_libraries(test_note_state gtest_main note_state)
 add_test(NAME note_state_test COMMAND test_note_state)
 
-
+add_subdirectory(alsa)
 
 add_executable(chordless main.cpp)
-target_link_libraries(chordless note_state)
+target_link_libraries(chordless note_event note_state alsa_input)
 
 
