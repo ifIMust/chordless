@@ -19,17 +19,23 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 
-add_library(note_state note_state.cc note_state.h)
 add_library(note_event note_event.cc note_event.h)
+add_library(note_name note_name.cc note_name.h)
+add_library(note_state note_state.cc note_state.h)
 
 include(CTest)
 add_executable(test_note_state test_note_state.cc)
 target_link_libraries(test_note_state gtest_main note_state)
 add_test(NAME note_state_test COMMAND test_note_state)
 
+add_executable(test_note_name test_note_name.cc)
+target_link_libraries(test_note_name gtest_main note_name)
+add_test(NAME note_name_test COMMAND test_note_name)
+
+
 add_subdirectory(alsa)
 
 add_executable(chordless main.cpp)
-target_link_libraries(chordless note_event note_state alsa_input)
+target_link_libraries(chordless note_event note_name note_state alsa_input)
 
 

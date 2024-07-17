@@ -1,4 +1,5 @@
 #include "note_event.h"
+#include "note_name.h"
 #include "note_state.h"
 #include "alsa/alsa_input.h"
 #include <iostream>
@@ -21,10 +22,8 @@ int main() {
   while (true) {
     auto had_event = input.Read(event);
     if (had_event) {
-      std::cout << "Note " << std::hex << static_cast<int>(event.note_)
-		<< " Vel " << static_cast<int>(event.velocity_) << std::endl;
+      std::cout << "Note " << chordless::NoteName::Name(event.note_, false) << std::endl;
     }
   }
-  
   return 0;
 }
