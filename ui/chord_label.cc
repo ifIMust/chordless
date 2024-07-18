@@ -17,7 +17,7 @@ namespace chordless {
       
       read_input_.store(true);
       
-      this->setText("No notes yet");
+      this->setText("Play to begin");
 
       read_fut_ = std::async(std::launch::async, [this](){
 	chordless::NoteState note_state;
