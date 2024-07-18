@@ -29,10 +29,9 @@ namespace chordless {
 
       if (ev_in->type == SND_SEQ_EVENT_NOTEON ||
 	  ev_in->type == SND_SEQ_EVENT_NOTEOFF) {
-	
-	event.on_ = (ev_in->type == SND_SEQ_EVENT_NOTEON);
-	event.note_ = ev_in->data.note.note;
-	event.velocity_ = ev_in->data.note.velocity;
+
+	NoteEvent out((ev_in->type == SND_SEQ_EVENT_NOTEON), ev_in->data.note.note, ev_in->data.note.velocity);
+	event = std::move(out);
 	return true;
       }
       return false;

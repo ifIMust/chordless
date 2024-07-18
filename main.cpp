@@ -3,10 +3,9 @@
 #include "note_state.h"
 #include "alsa/alsa_input.h"
 #include <iostream>
-#include <unistd.h>
+#include <vector>
 
 constexpr auto buffer_size {64};
-constexpr auto sleep_duration {1};
 
 int main() {
   chordless::NoteState note_state;
@@ -18,11 +17,23 @@ int main() {
   }
 
   chordless::NoteEvent event;
+  std::vector<unsigned char> notes;
   
   while (true) {
     auto had_event = input.Read(event);
     if (had_event) {
-      std::cout << "Note " << chordless::NoteName::Name(event.note_, false) << std::endl;
+      auto &note = event.note_;
+      event.on_ ? note_state.NoteOn(note) : note_state.NoteOff(note);
+      notes.clear();
+      note_state.GetNotes(notes);
+      for (auto n : notes) {
+	auto note_str(chordless::NoteName::Name(n, false));
+	std::cout << note_str;
+	if (note_str.size() == 1) {
+	  std::cout << ' ';
+	}
+      }
+      std::cout << std::endl;
     }
   }
   return 0;

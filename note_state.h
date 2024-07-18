@@ -1,6 +1,7 @@
 #pragma once
 
 #include <bitset>
+#include <vector>
 
 constexpr auto kNumNotes = 128;
 
@@ -19,6 +20,8 @@ namespace chordless {
     // Number of notes that are "On". Can be 0-128.
     std::size_t NumNotesOn() const noexcept;
 
+    void GetNotes(std::vector<unsigned char> &notes);
+    
   private:
     std::bitset<kNumNotes> notes_;
   };

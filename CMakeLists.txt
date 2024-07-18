@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 project(chordless)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
@@ -24,14 +24,17 @@ add_library(note_name note_name.cc note_name.h)
 add_library(note_state note_state.cc note_state.h)
 
 include(CTest)
-add_executable(test_note_state test_note_state.cc)
-target_link_libraries(test_note_state gtest_main note_state)
-add_test(NAME note_state_test COMMAND test_note_state)
-
 add_executable(test_note_name test_note_name.cc)
 target_link_libraries(test_note_name gtest_main note_name)
 add_test(NAME note_name_test COMMAND test_note_name)
 
+add_executable(test_note_event test_note_event.cc)
+target_link_libraries(test_note_event gtest_main note_event)
+add_test(NAME note_event_test COMMAND test_note_event)
+
+add_executable(test_note_state test_note_state.cc)
+target_link_libraries(test_note_state gtest_main note_state)
+add_test(NAME note_state_test COMMAND test_note_state)
 
 add_subdirectory(alsa)
 
