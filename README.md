@@ -28,6 +28,7 @@ The output binary in the build directory is called `chordless`.
 Run `chordless` with no arguments. An ALSA port is opened.
 Use an ALSA utility such as `aconnectgui` to connect your MIDI instrument to chordless
 
+![chordless and aconnectgui](/screenshot.png?raw=true "Screenshot")
 
 ## Desired features
 - Add L/GPL license to comply with Qt licensing.
