@@ -2,39 +2,36 @@
 #include "note_name.h"
 #include "note_state.h"
 #include "alsa/alsa_input.h"
+#include "ui/chord_label.h"
+
+#include <QApplication>
+#include <future>
 #include <iostream>
 #include <vector>
 
-constexpr auto buffer_size {64};
+constexpr int window_w = 200;
+constexpr int window_h = 100;
+constexpr int label_x = 10;
+constexpr int label_y = 10;
+constexpr int label_w = window_w - label_x*2;
+constexpr int label_h = window_h - label_y*2;
 
-int main() {
-  chordless::NoteState note_state;
-  
-  chordless::alsa::AlsaInput input;
-  if (!input.IsValid()) {
+int main(int argc, char **argv) {
+  QApplication app(argc, argv);
+  QWidget window;
+  window.setFixedSize(window_w, window_h);
+
+  chordless::alsa::AlsaInput alsa_input;
+  if (!alsa_input.IsValid()) {
     std::cout << "Failed to open ALSA sequencer/port" << std::endl;
     exit(EXIT_FAILURE);
   }
 
-  chordless::NoteEvent event;
-  std::vector<unsigned char> notes;
+  auto label = new chordless::ui::ChordLabel(&window, alsa_input);
+  label->setGeometry(label_x, label_y, label_w, label_h);
+  window.show();
+
+  QObject::connect(&app, SIGNAL(aboutToQuit()), label, SLOT(Teardown()));
   
-  while (true) {
-    auto had_event = input.Read(event);
-    if (had_event) {
-      auto &note = event.note_;
-      event.on_ ? note_state.NoteOn(note) : note_state.NoteOff(note);
-      notes.clear();
-      note_state.GetNotes(notes);
-      for (auto n : notes) {
-	auto note_str(chordless::NoteName::Name(n, false));
-	std::cout << note_str;
-	if (note_str.size() == 1) {
-	  std::cout << ' ';
-	}
-      }
-      std::cout << std::endl;
-    }
-  }
-  return 0;
+  return app.exec();
 }

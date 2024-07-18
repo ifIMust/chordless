@@ -2,7 +2,6 @@
 #include "../note_event.h"
 
 #include <alsa/asoundlib.h>
-#include <vector>
 
 namespace chordless {
   namespace alsa {

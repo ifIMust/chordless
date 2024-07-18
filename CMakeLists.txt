@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(chordless)
+project(chordless LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 
 # Download google test every time we build... might not be the best way!
 include(FetchContent)
@@ -38,7 +37,13 @@ add_test(NAME note_state_test COMMAND test_note_state)
 
 add_subdirectory(alsa)
 
-add_executable(chordless main.cpp)
-target_link_libraries(chordless note_event note_name note_state alsa_input)
+# Qt components follow
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
+qt_standard_project_setup()
+
+add_subdirectory(ui)
+
+qt_add_executable(chordless main.cpp)
+target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets note_event note_name note_state alsa_input chord_label)
 
 
