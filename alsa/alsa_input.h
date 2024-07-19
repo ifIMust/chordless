@@ -1,5 +1,5 @@
 #pragma once
-#include "../note_event.h"
+#include "../note/note_event.h"
 
 #include <alsa/asoundlib.h>
 
@@ -11,8 +11,9 @@ namespace chordless {
       ~AlsaInput();
 
       bool IsValid() const noexcept;
+      chordless::note::NoteEvent Read();
       
-      bool Read(NoteEvent &event);
+      bool ReadNote(chordless::note::NoteEvent &event);
 
     private:
       snd_seq_t *seq_handle_{nullptr};

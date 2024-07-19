@@ -1,6 +1,6 @@
 #include "chord_label.h"
 
-#include "../note_event.h"
+#include "../note/note_event.h"
 #include "../note_name.h"
 #include "../note_state.h"
 #include "../alsa/alsa_input.h"
@@ -21,16 +21,16 @@ namespace chordless {
 
       read_fut_ = std::async(std::launch::async, [this](){
 	chordless::NoteState note_state;
-	chordless::NoteEvent event;
+	chordless::note::NoteEvent event;
 	std::vector<unsigned char> notes;
 
 	while (this->read_input_.load()) {
 	  // Non-blocking read, so the app can shut down cleanly.
 	  // Sleep if we haven't seen note action, to keep CPU usage down.
-	  auto had_event = this->alsa_input_.Read(event);
-	  if (had_event) {
+	  auto had_event = this->alsa_input_.ReadNote(event);
+	  if (had_event && event.type_ != chordless::note::NoteEventType::NONE) {
 	    auto &note = event.note_;
-	    event.on_ ? note_state.NoteOn(note) : note_state.NoteOff(note);
+	    event.type_ == chordless::note::NoteEventType::NOTE_ON ? note_state.NoteOn(note) : note_state.NoteOff(note);
 	    notes.clear();
 	    note_state.GetNotes(notes);
 

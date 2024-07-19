@@ -1,6 +1,3 @@
-#include "note_event.h"
-#include "note_name.h"
-#include "note_state.h"
 #include "alsa/alsa_input.h"
 #include "ui/chord_label.h"
 
@@ -15,6 +12,11 @@ constexpr int label_x = 10;
 constexpr int label_y = 10;
 constexpr int label_w = window_w - label_x*2;
 constexpr int label_h = window_h - label_y*2;
+
+
+static void shutup () {
+  std::cout << "Shut the stuff down\n";
+}
 
 int main(int argc, char **argv) {
   chordless::alsa::AlsaInput alsa_input;
@@ -35,6 +37,9 @@ int main(int argc, char **argv) {
   
   window.show();
 
+  QObject::connect(&app, &QApplication::aboutToQuit, &shutup);
+
+    
   // When the application window is closed, stop the ChordLabel MIDI read loop.
   QObject::connect(&app, SIGNAL(aboutToQuit()), label, SLOT(Teardown()));
   
