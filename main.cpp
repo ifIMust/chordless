@@ -17,15 +17,15 @@ constexpr int label_w = window_w - label_x*2;
 constexpr int label_h = window_h - label_y*2;
 
 int main(int argc, char **argv) {
+  chordless::alsa::AlsaInput alsa_input;
+  if (!alsa_input.IsValid()) {
+    std::cerr << "Failed to open ALSA sequencer/port" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
   QApplication app(argc, argv);
   QWidget window;
   window.setFixedSize(window_w, window_h);
-
-  chordless::alsa::AlsaInput alsa_input;
-  if (!alsa_input.IsValid()) {
-    std::cout << "Failed to open ALSA sequencer/port" << std::endl;
-    exit(EXIT_FAILURE);
-  }
 
   auto label = new chordless::ui::ChordLabel(&window, alsa_input);
   label->setGeometry(label_x, label_y, label_w, label_h);
@@ -35,6 +35,7 @@ int main(int argc, char **argv) {
   
   window.show();
 
+  // When the application window is closed, stop the ChordLabel MIDI read loop.
   QObject::connect(&app, SIGNAL(aboutToQuit()), label, SLOT(Teardown()));
   
   return app.exec();

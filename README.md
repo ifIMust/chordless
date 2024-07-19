@@ -36,9 +36,14 @@ Use an ALSA utility such as `aconnectgui` to connect your MIDI instrument to cho
 - Display note octave as numeric subscript.
 - Detect chord patterns and display the chord names.
 
+## Cleanup
+- Move `note_` files to a subdirectory
+- Improve the AlsaInput::Read interaction
+- Abstract AlsaInput behind an interface
+- Make unit testing a separate target
+- Consider storing gtest files in repo
 
 ## Further work
-- Make unit testing a separate target
-- Resizable window with font scaling
-- Support JACK MIDI input
 - Select key/mode, for improved chord naming/analysis
+- JACK MIDI input
+- Resizable window with font scaling
