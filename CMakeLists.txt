@@ -19,16 +19,11 @@ FetchContent_MakeAvailable(googletest)
 
 add_library(note_name note_name.cc note_name.h)
 add_library(note_reader note_reader.cc note_reader.h)
-add_library(note_state note_state.cc note_state.h)
 
 include(CTest)
 add_executable(test_note_name test_note_name.cc)
 target_link_libraries(test_note_name gtest_main note_name)
 add_test(NAME note_name_test COMMAND test_note_name)
-
-add_executable(test_note_state test_note_state.cc)
-target_link_libraries(test_note_state gtest_main note_state)
-add_test(NAME note_state_test COMMAND test_note_state)
 
 add_subdirectory(alsa)
 add_subdirectory(note)
@@ -39,7 +34,7 @@ qt_standard_project_setup()
 
 add_subdirectory(ui)
 
-qt_add_executable(chordless main.cpp)
+qt_add_executable(chordless main.cc)
 target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets note_event note_name note_reader note_state alsa_input chord_label full_voicing_observer)
 
 

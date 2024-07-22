@@ -4,7 +4,6 @@
 
 #include <QLabel>
 
-#include <future>
 #include <string>
 
 namespace chordless {

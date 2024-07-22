@@ -1,7 +1,7 @@
 #include "full_voicing_observer.h"
 #include "../ui/text_setter.h"
+#include "../note/note_state.h"
 #include "../note_name.h"
-#include "../note_state.h"
 
 #include <sstream>
 #include <string>
@@ -9,7 +9,7 @@
 
 namespace chordless {
   namespace note {
-    FullVoicingObserver::FullVoicingObserver(chordless::NoteState &ns, chordless::ui::TextSetter &ts) :
+    FullVoicingObserver::FullVoicingObserver(NoteState &ns, chordless::ui::TextSetter &ts) :
       note_state_(ns), text_setter_(ts)
     {}
 

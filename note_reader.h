@@ -7,11 +7,14 @@
 namespace chordless {
   class NoteInput;
   class NoteObserver;
-  class NoteState;
+
+  namespace note {
+    class NoteState;
+  }
   
   class NoteReader {
   public:
-    NoteReader(NoteInput &, NoteState &);
+    NoteReader(NoteInput &, note::NoteState &);
 
     void Run();
     void Stop();
@@ -20,7 +23,7 @@ namespace chordless {
     
   private:
     NoteInput &note_input_;
-    NoteState &note_state_;
+    note::NoteState &note_state_;
 
     std::atomic<bool> read_input_;
     std::future<void> read_fut_;

@@ -3,16 +3,16 @@
 #include "../note_observer.h"
 
 namespace chordless {
-  class NoteState;
-
   namespace ui {
     class TextSetter;
   }
 
   namespace note {
+    class NoteState;    
+    
     class FullVoicingObserver : public NoteObserver {
     public:
-      explicit FullVoicingObserver(chordless::NoteState&, chordless::ui::TextSetter&);
+      explicit FullVoicingObserver(NoteState&, chordless::ui::TextSetter&);
 
       void Observe() noexcept;
       
@@ -20,7 +20,7 @@ namespace chordless {
       FullVoicingObserver& operator=(const FullVoicingObserver&) = delete;
 
     private:
-      chordless::NoteState& note_state_;
+      NoteState& note_state_;
       chordless::ui::TextSetter &text_setter_;
     };
   }

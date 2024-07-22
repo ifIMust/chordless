@@ -4,24 +4,24 @@
 #include <vector>
 
 TEST(NoteStateTest, NumNotesOnInitial) {
-  chordless::NoteState noteState;
+  chordless::note::NoteState noteState;
   ASSERT_EQ(0, noteState.NumNotesOn());
 }
 
 TEST(NoteStateTest, NumNotesOnWithValidNote) {
-  chordless::NoteState noteState;
+  chordless::note::NoteState noteState;
   noteState.NoteOn(0);
   ASSERT_EQ(1, noteState.NumNotesOn());
 }
 
 TEST(NoteStateTest, NoteOnWithInvalidNote) {
-  chordless::NoteState noteState;
+  chordless::note::NoteState noteState;
   ASSERT_THROW(noteState.NoteOn(128), std::out_of_range);
   ASSERT_EQ(0, noteState.NumNotesOn());
 }
 
 TEST(NoteStateTest, NumNotesOnCmajCadence) {
-  chordless::NoteState noteState;
+  chordless::note::NoteState noteState;
   noteState.NoteOn(0x3C);
   noteState.NoteOn(0x40);
   noteState.NoteOn(0x43);
@@ -30,7 +30,7 @@ TEST(NoteStateTest, NumNotesOnCmajCadence) {
 }
 
 TEST(NoteStateTest, NumNotesOnRepeats) {
-  chordless::NoteState noteState;
+  chordless::note::NoteState noteState;
   noteState.NoteOn(0x3C);
   noteState.NoteOn(0x40);
   noteState.NoteOn(0x3C);
@@ -39,32 +39,32 @@ TEST(NoteStateTest, NumNotesOnRepeats) {
 }
 
 TEST(NoteStateTest, NumNotesOnNoteOffInit) {
-  chordless::NoteState noteState;
+  chordless::note::NoteState noteState;
   noteState.NoteOff(0);
   ASSERT_EQ(0, noteState.NumNotesOn());
 }
 
 TEST(NoteStateTest, NumNotesOnNoteOnOff) {
-  chordless::NoteState noteState;
+  chordless::note::NoteState noteState;
   noteState.NoteOn(0);
   noteState.NoteOff(0);
   ASSERT_EQ(0, noteState.NumNotesOn());
 }
 
 TEST(NoteStateTest, NoteOffWithInvalidNote) {
-  chordless::NoteState noteState;
+  chordless::note::NoteState noteState;
   ASSERT_THROW(noteState.NoteOff(128), std::out_of_range);
 }
 
 TEST(NoteStateTest, GetNotesNone) {
-  chordless::NoteState noteState;
+  chordless::note::NoteState noteState;
   std::vector<unsigned char> notes;
   noteState.GetNotes(notes);
   EXPECT_EQ(0, notes.size());
 }
 
 TEST(NoteStateTest, GetNotesSizeOne) {
-  chordless::NoteState noteState;
+  chordless::note::NoteState noteState;
   std::vector<unsigned char> notes;
   noteState.NoteOn(42);
   noteState.GetNotes(notes);
@@ -73,7 +73,7 @@ TEST(NoteStateTest, GetNotesSizeOne) {
 }
 
 TEST(NoteStateTest, GetNotesCMajCadence) {
-  chordless::NoteState noteState;
+  chordless::note::NoteState noteState;
   const std::vector<unsigned char> expected{0x3C, 0x40, 0x43, 0x4E};
   std::vector<unsigned char> notes;
   noteState.NoteOn(0x3C);
