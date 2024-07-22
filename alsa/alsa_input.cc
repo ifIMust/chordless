@@ -42,22 +42,5 @@ namespace chordless {
       }
       return chordless::note::NoteEvent();
     }
-
-    bool AlsaInput::ReadNote(chordless::note::NoteEvent &event) {
-      snd_seq_event_t *ev_in = nullptr;
-      auto result = snd_seq_event_input(seq_handle_, &ev_in);
-
-      if (result == -EAGAIN || result == -ENOSPC) {
-	return false;
-      }
-
-      if (ev_in->type == SND_SEQ_EVENT_NOTEON ||
-	  ev_in->type == SND_SEQ_EVENT_NOTEOFF) {
-	chordless::note::NoteEvent out((ev_in->type == SND_SEQ_EVENT_NOTEON), ev_in->data.note.note, ev_in->data.note.velocity);
-	event = std::move(out);
-	return true;
-      }
-      return false;
-    }
   }
 }

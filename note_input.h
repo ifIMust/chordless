@@ -7,7 +7,7 @@ namespace chordless {
   
   class NoteInput {
   public:
-    virtual bool IsValid() = 0;
-    virtual NoteEvent Read() = 0;
+    virtual bool IsValid() const noexcept = 0;
+    virtual note::NoteEvent Read() = 0;
   };
 }

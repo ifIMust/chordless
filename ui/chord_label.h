@@ -1,28 +1,23 @@
 #pragma once
 
+#include "text_setter.h"
+
 #include <QLabel>
 
 #include <future>
+#include <string>
 
 namespace chordless {
-  namespace alsa {
-    class AlsaInput;
-  }
+  class NoteInput;
   
   namespace ui {
-    class ChordLabel : public QLabel {
+    class ChordLabel : public QLabel, public TextSetter {
       Q_OBJECT
 
     public:
-      explicit ChordLabel(QWidget *parent, chordless::alsa::AlsaInput &alsa_input);
+      explicit ChordLabel(QWidget *parent);
 
-    public slots:
-      void Teardown();
-
-    private:
-      std::future<void> read_fut_;
-      chordless::alsa::AlsaInput &alsa_input_;
-      std::atomic<bool> read_input_;
+      void SetText(const std::string &);
     };
   }
 }

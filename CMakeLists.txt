@@ -18,6 +18,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 add_library(note_name note_name.cc note_name.h)
+add_library(note_reader note_reader.cc note_reader.h)
 add_library(note_state note_state.cc note_state.h)
 
 include(CTest)
@@ -39,6 +40,6 @@ qt_standard_project_setup()
 add_subdirectory(ui)
 
 qt_add_executable(chordless main.cpp)
-target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets note_event note_name note_state alsa_input chord_label)
+target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets note_event note_name note_reader note_state alsa_input chord_label full_voicing_observer)
 
 
