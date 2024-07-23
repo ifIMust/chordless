@@ -1,4 +1,5 @@
 add_library(full_voicing_observer full_voicing_observer.cc full_voicing_observer.h)
+target_link_libraries(full_voicing_observer note_name)
 
 add_library(note_event note_event.cc note_event.h)
 

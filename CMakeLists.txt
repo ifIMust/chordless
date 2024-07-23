@@ -25,8 +25,8 @@ add_executable(test_note_name test_note_name.cc)
 target_link_libraries(test_note_name gtest_main note_name)
 add_test(NAME note_name_test COMMAND test_note_name)
 
-add_subdirectory(alsa)
 add_subdirectory(note)
+add_subdirectory(alsa)
 
 # Qt components follow
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
