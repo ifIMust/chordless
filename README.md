@@ -3,13 +3,15 @@
 chordless is a MIDI note analyzer that runs on Linux.
 Any modern Linux (i.e. with ALSA) version should work.
 
+Tht initial project goals are not yet completed.
+
 ### Project Goals
 - Display currently "on" notes from a MIDI instrument (done)
 - Display chord names matching the note structure (not done)
 - Customize displayed info using GUI controls (not done)
 
 ### Dependencies
-- Qt for GUI
+- Qt 6.3+ for GUI
 - CMake for build
 - gtest for unit testing
 - ALSA for receiving MIDI events
@@ -18,6 +20,7 @@ Any modern Linux (i.e. with ALSA) version should work.
 Requirements (with example Debian/Ubuntu package names):
 - CMake (cmake)
 - Qt dev files (qt6-base-dev)
+- OpenGL dev files required by Qt6 (libgl1-mesa-dev)
 - ALSA dev files (libasound2-dev)
 - An internet connection, since gtest is downloaded from github during the build
 
