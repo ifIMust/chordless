@@ -1,6 +1,10 @@
 add_library(full_voicing_observer full_voicing_observer.cc full_voicing_observer.h)
 target_link_libraries(full_voicing_observer note_name)
 
+add_executable(test_full_voicing_observer test_full_voicing_observer.cc)
+target_link_libraries(test_full_voicing_observer gtest_main full_voicing_observer note_state)
+add_test(NAME full_voicing_observer_test COMMAND test_full_voicing_observer)
+
 add_library(note_event note_event.cc note_event.h)
 
 add_executable(test_note_event test_note_event.cc)
