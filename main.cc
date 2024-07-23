@@ -2,6 +2,7 @@
 #include "note/full_voicing_observer.h"
 #include "note/note_state.h"
 #include "note/note_reader.h"
+#include "note/scientific_note_namer.h"
 #include "ui/chord_label.h"
 
 #include <QApplication>
@@ -29,11 +30,12 @@ int main(int argc, char **argv) {
   auto label = new chordless::ui::ChordLabel(&window);
   label->setGeometry(label_x, label_y, label_w, label_h);
 
-  QFont font("Courier", 24);
+  QFont font("Helvetica", 24);
   label->setFont(font);
 
   chordless::note::NoteState note_state;
   chordless::note::FullVoicingObserver full_voicing(note_state, *label);
+  full_voicing.SetNoteNamer(std::unique_ptr<chordless::note::NoteNamer>(new chordless::note::ScientificNoteNamer()));
   chordless::note::NoteReader note_reader(alsa_input, note_state);
   note_reader.AddObserver(full_voicing);
   note_reader.Run();

@@ -29,4 +29,4 @@ qt_standard_project_setup()
 add_subdirectory(ui)
 
 qt_add_executable(chordless main.cc)
-target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets note_event note_name note_reader note_state alsa_input chord_label full_voicing_observer)
+target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets note_event note_reader note_state alsa_input chord_label full_voicing_observer scientific_note_namer)

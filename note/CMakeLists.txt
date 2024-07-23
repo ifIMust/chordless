@@ -1,5 +1,11 @@
+add_library(basic_note_namer basic_note_namer.cc basic_note_namer.h)
+
+add_executable(test_basic_note_namer test_basic_note_namer.cc)
+target_link_libraries(test_basic_note_namer gtest_main basic_note_namer)
+add_test(NAME basic_note_namer_test COMMAND test_basic_note_namer)
+
 add_library(full_voicing_observer full_voicing_observer.cc full_voicing_observer.h)
-target_link_libraries(full_voicing_observer note_name)
+target_link_libraries(full_voicing_observer basic_note_namer)
 
 add_executable(test_full_voicing_observer test_full_voicing_observer.cc)
 target_link_libraries(test_full_voicing_observer gtest_main full_voicing_observer note_state)
@@ -11,11 +17,12 @@ add_executable(test_note_event test_note_event.cc)
 target_link_libraries(test_note_event gtest_main note_event)
 add_test(NAME note_event_test COMMAND test_note_event)
 
-add_library(note_name note_name.cc note_name.h)
+add_library(scientific_note_namer scientific_note_namer.cc scientific_note_namer.h)
+target_link_libraries(scientific_note_namer basic_note_namer)
 
-add_executable(test_note_name test_note_name.cc)
-target_link_libraries(test_note_name gtest_main note_name)
-add_test(NAME note_name_test COMMAND test_note_name)
+add_executable(test_scientific_note_namer test_scientific_note_namer.cc)
+target_link_libraries(test_scientific_note_namer gtest_main scientific_note_namer)
+add_test(NAME scientific_note_namer_test COMMAND test_scientific_note_namer)
 
 add_library(note_reader note_reader.cc note_reader.h)
 

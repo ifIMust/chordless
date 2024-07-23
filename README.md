@@ -9,6 +9,7 @@ Tht initial project goals are not yet completed.
 - Display currently "on" notes from a MIDI instrument (done)
 - Display chord names matching the note structure (not done)
 - Customize displayed info using GUI controls (not done)
+- Conform to the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
 
 ### Dependencies
 - Qt 6.3+ for GUI
