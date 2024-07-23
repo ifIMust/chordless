@@ -7,6 +7,12 @@ add_executable(test_note_event test_note_event.cc)
 target_link_libraries(test_note_event gtest_main note_event)
 add_test(NAME note_event_test COMMAND test_note_event)
 
+add_library(note_name note_name.cc note_name.h)
+
+add_executable(test_note_name test_note_name.cc)
+target_link_libraries(test_note_name gtest_main note_name)
+add_test(NAME note_name_test COMMAND test_note_name)
+
 add_library(note_state note_state.cc note_state.h)
 
 add_executable(test_note_state test_note_state.cc)

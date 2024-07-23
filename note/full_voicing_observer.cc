@@ -1,7 +1,8 @@
 #include "full_voicing_observer.h"
+
+#include "note_name.h"
 #include "../ui/text_setter.h"
 #include "../note/note_state.h"
-#include "../note_name.h"
 
 #include <sstream>
 #include <string>
@@ -19,7 +20,7 @@ namespace chordless {
 
       std::ostringstream ss;
       for (auto n : notes) {
-	ss << chordless::NoteName::Name(n, false) << " ";
+	ss << NoteName::Name(n, false) << " ";
       }
       text_setter_.SetText(ss.str());
     }
