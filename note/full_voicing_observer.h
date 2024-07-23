@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../note_observer.h"
+#include "note_observer.h"
 
 namespace chordless {
   namespace ui {

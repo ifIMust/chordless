@@ -1,14 +1,14 @@
 #include "note_reader.h"
 
+#include "note_event.h"
 #include "note_observer.h"
-#include "input/note_input.h"
-#include "note/note_event.h"
-#include "note/note_state.h"
+#include "note_state.h"
+#include "../input/note_input.h"
 
 #include <thread>
 
-namespace chordless {
-  NoteReader::NoteReader(input::NoteInput &input, note::NoteState &state) :
+namespace chordless::note {
+  NoteReader::NoteReader(input::NoteInput &input, NoteState &state) :
     note_input_(input), note_state_(state)
   {}
 
@@ -19,11 +19,11 @@ namespace chordless {
 	// Non-blocking read, so the app can shut down cleanly.
 	// Sleep if we haven't seen note action, to keep CPU usage down.
 	auto event = this->note_input_.Read();
-	if (event.type_ == chordless::note::NoteEventType::NONE) {
+	if (event.type_ == NoteEventType::NONE) {
 	  using namespace std::chrono_literals;
 	  std::this_thread::sleep_for(50ms);
 	} else {
-	  if (event.type_ == chordless::note::NoteEventType::NOTE_ON) {
+	  if (event.type_ == NoteEventType::NOTE_ON) {
 	    this->note_state_.NoteOn(event.note_);
 	  } else {
 	    this->note_state_.NoteOff(event.note_);

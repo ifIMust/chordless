@@ -1,8 +1,8 @@
 #include "input/alsa/alsa_input.h"
 #include "note/full_voicing_observer.h"
 #include "note/note_state.h"
+#include "note/note_reader.h"
 #include "ui/chord_label.h"
-#include "note_reader.h"
 
 #include <QApplication>
 
@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
 
   chordless::note::NoteState note_state;
   chordless::note::FullVoicingObserver full_voicing(note_state, *label);
-  chordless::NoteReader note_reader(alsa_input, note_state);
+  chordless::note::NoteReader note_reader(alsa_input, note_state);
   note_reader.AddObserver(full_voicing);
   note_reader.Run();
   

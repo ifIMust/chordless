@@ -13,6 +13,8 @@ add_executable(test_note_name test_note_name.cc)
 target_link_libraries(test_note_name gtest_main note_name)
 add_test(NAME note_name_test COMMAND test_note_name)
 
+add_library(note_reader note_reader.cc note_reader.h)
+
 add_library(note_state note_state.cc note_state.h)
 
 add_executable(test_note_state test_note_state.cc)
