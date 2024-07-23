@@ -20,9 +20,9 @@ FetchContent_MakeAvailable(googletest)
 add_library(note_reader note_reader.cc note_reader.h)
 
 include(CTest)
-
+enable_testing()
 add_subdirectory(note)
-add_subdirectory(alsa)
+add_subdirectory(input)
 
 # Qt components follow
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)

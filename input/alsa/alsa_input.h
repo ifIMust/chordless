@@ -1,12 +1,12 @@
 #pragma once
-#include "../note/note_event.h"
+#include "../../note/note_event.h"
 #include "../note_input.h"
 
 #include <alsa/asoundlib.h>
 
 namespace chordless {
   namespace alsa {
-    class AlsaInput : public ::chordless::NoteInput {
+    class AlsaInput : public ::chordless::input::NoteInput {
     public:
       AlsaInput();
       ~AlsaInput();

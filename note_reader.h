@@ -5,8 +5,11 @@
 #include <vector>
 
 namespace chordless {
-  class NoteInput;
   class NoteObserver;
+
+  namespace input {
+    class NoteInput;
+  }
 
   namespace note {
     class NoteState;
@@ -14,7 +17,7 @@ namespace chordless {
   
   class NoteReader {
   public:
-    NoteReader(NoteInput &, note::NoteState &);
+    NoteReader(input::NoteInput &, note::NoteState &);
 
     void Run();
     void Stop();
@@ -22,7 +25,7 @@ namespace chordless {
     void AddObserver(NoteObserver&);
     
   private:
-    NoteInput &note_input_;
+    input::NoteInput &note_input_;
     note::NoteState &note_state_;
 
     std::atomic<bool> read_input_;

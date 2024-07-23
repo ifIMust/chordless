@@ -1,4 +1,4 @@
-#include "alsa/alsa_input.h"
+#include "input/alsa/alsa_input.h"
 #include "note/full_voicing_observer.h"
 #include "note/note_state.h"
 #include "ui/chord_label.h"

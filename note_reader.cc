@@ -1,13 +1,14 @@
 #include "note_reader.h"
-#include "note_input.h"
+
 #include "note_observer.h"
+#include "input/note_input.h"
 #include "note/note_event.h"
 #include "note/note_state.h"
 
 #include <thread>
 
 namespace chordless {
-  NoteReader::NoteReader(NoteInput &input, note::NoteState &state) :
+  NoteReader::NoteReader(input::NoteInput &input, note::NoteState &state) :
     note_input_(input), note_state_(state)
   {}
 
