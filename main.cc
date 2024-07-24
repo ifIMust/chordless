@@ -8,6 +8,7 @@
 #include <QApplication>
 
 #include <iostream>
+#include <memory>
 
 constexpr int window_w = 498;
 constexpr int window_h = 64;
@@ -37,7 +38,7 @@ int main(int argc, char **argv) {
 
   chordless::note::NoteState note_state;
   chordless::note::FullVoicingObserver full_voicing(note_state, *label);
-  full_voicing.SetNoteNamer(std::unique_ptr<chordless::note::NoteNamer>(new chordless::note::ScientificNoteNamer()));
+  full_voicing.SetNoteNamer(std::make_unique<chordless::note::ScientificNoteNamer>());
   chordless::note::NoteReader note_reader(alsa_input, note_state);
   note_reader.AddObserver(full_voicing);
   note_reader.Run();

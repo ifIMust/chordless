@@ -21,5 +21,9 @@ namespace chordless {
 	}
       }
     }
+
+    const std::bitset<kNumNotes>& NoteState::GetBits() const noexcept {
+      return notes_;
+    }
   }
 }

@@ -23,6 +23,7 @@ include(CTest)
 enable_testing()
 add_subdirectory(note)
 add_subdirectory(input)
+add_subdirectory(chord)
 
 # Qt components follow
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)

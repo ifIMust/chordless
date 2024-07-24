@@ -1,0 +1,13 @@
+add_library(chord_matcher chord_matcher.cc chord_matcher.h)
+target_link_libraries(chord_matcher basic_note_namer)
+
+add_executable(test_chord_matcher test_chord_matcher.cc)
+target_link_libraries(test_chord_matcher gtest_main chord_matcher chord_matcher_config_factory note_state)
+add_test(NAME chord_matcher_test COMMAND test_chord_matcher)
+
+
+add_library(chord_matcher_config_factory chord_matcher_config_factory.cc chord_matcher_config_factory.h)
+
+add_executable(test_chord_matcher_config_factory test_chord_matcher_config_factory.cc)
+target_link_libraries(test_chord_matcher_config_factory gtest_main chord_matcher_config_factory)
+add_test(NAME chord_matcher_config_factory_test COMMAND test_chord_matcher_config_factory)
