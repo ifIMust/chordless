@@ -14,7 +14,7 @@ namespace chordless {
       return notes_.count();
     }
 
-    void NoteState::GetNotes(std::vector<unsigned char> &notes) {
+    void NoteState::GetNotes(std::vector<unsigned char> &notes) const {
       for (unsigned char i = 0; i < kNumNotes; ++i) {
 	if (notes_.test(i)) {
 	  notes.push_back(i);

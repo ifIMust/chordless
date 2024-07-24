@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace chordless::note {
-  FullVoicingObserver::FullVoicingObserver(NoteState &ns, chordless::ui::TextSetter &ts) :
+  FullVoicingObserver::FullVoicingObserver(const NoteState &ns, chordless::ui::TextSetter &ts) :
     note_state_(ns), text_setter_(ts), note_namer_(std::make_unique<BasicNoteNamer>())
   {}
 

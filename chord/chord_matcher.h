@@ -2,6 +2,7 @@
 
 #include "chord.h"
 
+#include "chord_matcher_config.h"
 #include "../note/note_namer.h"
 
 #include <memory>
@@ -13,8 +14,6 @@ namespace chordless {
   }
   
   namespace chord {
-    struct ChordMatcherConfig;
-    
     class ChordMatcher {
     public:
       ChordMatcher();

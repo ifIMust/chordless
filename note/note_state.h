@@ -16,7 +16,7 @@ namespace chordless {
       // Number of notes that are "On". Can be 0-127.
       std::size_t NumNotesOn() const noexcept;
 
-      void GetNotes(std::vector<unsigned char> &notes);
+      void GetNotes(std::vector<unsigned char> &notes) const;
 
       const std::bitset<kNumNotes>& GetBits() const noexcept;
       

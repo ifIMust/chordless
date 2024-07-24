@@ -16,7 +16,7 @@ namespace chordless {
     
     class FullVoicingObserver : public NoteObserver {
     public:
-      explicit FullVoicingObserver(NoteState&, chordless::ui::TextSetter&);
+      explicit FullVoicingObserver(const NoteState&, chordless::ui::TextSetter&);
 
       void Observe() noexcept;
 
@@ -26,7 +26,7 @@ namespace chordless {
       FullVoicingObserver& operator=(const FullVoicingObserver&) = delete;
 
     private:
-      NoteState& note_state_;
+      const NoteState& note_state_;
       chordless::ui::TextSetter &text_setter_;
       std::unique_ptr<NoteNamer> note_namer_;
     };
