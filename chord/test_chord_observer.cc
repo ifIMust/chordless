@@ -37,7 +37,7 @@ TEST_F(ChordObserverTest, ObserveMajorWithNullMatcher) {
   note_state.NoteOn(4);
   note_state.NoteOn(7);
 
-  auto matcher(std::make_unique<::chordless::chord::ChordMatcher>());
+  auto matcher(std::make_unique<chordless::chord::ChordMatcher>());
   observer.AddMatcher(std::move(matcher));
   observer.Observe();
   EXPECT_TRUE(text_setter.text_.empty());
@@ -48,11 +48,11 @@ TEST_F(ChordObserverTest, ObserveMajorWithMajorMatcher) {
   note_state.NoteOn(4);
   note_state.NoteOn(7);
 
-  auto matcher(std::make_unique<::chordless::chord::ChordMatcher>());
-  matcher->SetConfig(config_factory.MakeConfig(::chordless::chord::ChordType::MAJOR_TRIAD));
+  auto matcher(std::make_unique<chordless::chord::ChordMatcher>());
+  matcher->SetConfig(config_factory.MakeConfig(chordless::chord::ChordType::MAJOR_TRIAD));
   observer.AddMatcher(std::move(matcher));
   observer.Observe();
 
-  const std::string expected("C\n");
+  const std::string expected("C ");
   EXPECT_EQ(expected, text_setter.text_);
 }

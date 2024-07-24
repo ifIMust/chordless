@@ -16,16 +16,12 @@ namespace chordless::chord {
     
     for (const auto &cm : matchers_) {
       auto chords = cm->Match(note_state_);
-      
-      // I don't have C++23 library support yet :(
-      // all_chords.append_range(std::move(chords));
-
       all_chords.insert(all_chords.cend(), chords.cbegin(), chords.cend());
     }
 
     std::ostringstream ss;
     for (auto c : all_chords) {
-      ss << c.name << "\n";
+      ss << c.name << " ";
     }
     text_setter_.SetText(ss.str());
   }

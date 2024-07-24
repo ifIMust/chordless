@@ -14,6 +14,7 @@ add_test(NAME chord_matcher_config_factory_test COMMAND test_chord_matcher_confi
 
 
 add_library(chord_observer chord_observer.cc chord_observer.h)
+target_link_libraries(chord_observer chord_matcher)
 
 add_executable(test_chord_observer test_chord_observer.cc ../ui/mock/mock_text_setter.h)
 target_link_libraries(test_chord_observer gtest_main chord_observer note_state chord_matcher chord_matcher_config_factory)
