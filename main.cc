@@ -17,6 +17,8 @@ constexpr int label_w = window_w - label_x*2;
 constexpr int label_h = window_h - label_y*2;
 
 int main(int argc, char **argv) {
+  std::cout << "chordless v" << CHORDLESS_VERSION << std::endl;
+  
   chordless::alsa::AlsaInput alsa_input;
   if (!alsa_input.IsValid()) {
     std::cerr << "Failed to open ALSA sequencer/port" << std::endl;

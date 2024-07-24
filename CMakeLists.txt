@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(chordless LANGUAGES CXX)
+project(chordless VERSION 0.5 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+add_compile_options(-Wall -Wextra -Wpedantic -Werror)
+add_compile_definitions(CHORDLESS_VERSION=${PROJECT_VERSION})
 
 # Download google test every time we build... might not be the best way!
 include(FetchContent)

@@ -37,13 +37,13 @@ The output binary in the build directory is called `chordless`.
 
 ## Usage
 Run `chordless` with no arguments. An ALSA port is opened.
-Use an ALSA utility such as `aconnectgui` to connect your MIDI instrument to chordless
+Use an ALSA utility such as `aconnectgui` to connect your MIDI instrument to chordless.
 
 ![chordless and aconnectgui](/screenshot.png?raw=true "Screenshot")
 
 ## Desired features
 - Select sharps or flats preference with a UI widget.
-- Display note octave as numeric subscript.
+- Toggle numeric subscript visibility with a UI widget.
 - Detect chord patterns and display the chord names.
 
 ## Further work
