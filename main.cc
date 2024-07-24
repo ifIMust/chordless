@@ -29,9 +29,14 @@ constexpr int chord_label_h = full_voice_label_h;
 
 void configureChordObserver(chordless::chord::ChordObserver &c) {
   chordless::chord::ChordMatcherConfigFactory config_factory;
-  auto matcher(std::make_unique<chordless::chord::ChordMatcher>());
-  matcher->SetConfig(config_factory.MakeConfig(chordless::chord::ChordType::MAJOR_TRIAD));
-  c.AddMatcher(std::move(matcher));
+  
+  auto major(std::make_unique<chordless::chord::ChordMatcher>());
+  major->SetConfig(config_factory.MakeConfig(chordless::chord::ChordType::MAJOR_TRIAD));
+  c.AddMatcher(std::move(major));
+
+  auto minor(std::make_unique<chordless::chord::ChordMatcher>());
+  minor->SetConfig(config_factory.MakeConfig(chordless::chord::ChordType::MINOR_TRIAD));
+  c.AddMatcher(std::move(minor));
 }
 
 int main(int argc, char **argv) {

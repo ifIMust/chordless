@@ -19,13 +19,12 @@ namespace chordless::chord {
   
   std::vector<Chord> ChordMatcher::Match(const note::NoteState &note_state) noexcept {
     std::vector<Chord> chords;
+    NoteSet notes(note_state.GetBits());
 
     // Special cases: Null config or no notes played
-    if (config_->num_notes == 0 || note_state.NumNotesOn() == 0) {
+    if (config_->num_notes == 0 || notes.count() == 0) {
       return chords;
     }
-
-    NoteSet notes(note_state.GetBits());
 
     // Find the lowest "on" note. Bitshift until we find it.
     // There must be at least one note, confirmed by checking above.
@@ -37,7 +36,8 @@ namespace chordless::chord {
     }
 
     if ((rooted_notes & config_->pattern) == config_->pattern) {
-      chords.push_back(Chord{note_namer_->Name(root_note)});
+      auto chord_name = note_namer_->Name(root_note) + config_->suffix;
+      chords.push_back(Chord{chord_name});
     }
     return chords;
   }

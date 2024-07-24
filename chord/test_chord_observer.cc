@@ -56,3 +56,17 @@ TEST_F(ChordObserverTest, ObserveMajorWithMajorMatcher) {
   const std::string expected("C ");
   EXPECT_EQ(expected, text_setter.text_);
 }
+
+TEST_F(ChordObserverTest, ObserveMinorWithMinorMatcher) {
+  note_state.NoteOn(0);
+  note_state.NoteOn(3);
+  note_state.NoteOn(7);
+
+  auto matcher(std::make_unique<chordless::chord::ChordMatcher>());
+  matcher->SetConfig(config_factory.MakeConfig(chordless::chord::ChordType::MINOR_TRIAD));
+  observer.AddMatcher(std::move(matcher));
+  observer.Observe();
+
+  const std::string expected("C\u2098 ");
+  EXPECT_EQ(expected, text_setter.text_);
+}

@@ -11,5 +11,6 @@ namespace chordless::chord {
     std::size_t pattern_width {0};
     std::size_t num_notes{0};
     std::string name;
+    std::string suffix;
   };
 }

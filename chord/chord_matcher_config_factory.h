@@ -6,7 +6,8 @@ namespace chordless::chord {
   struct ChordMatcherConfig;
   
   enum class ChordType {
-    MAJOR_TRIAD
+    MAJOR_TRIAD,
+      MINOR_TRIAD
   };
   
   class ChordMatcherConfigFactory {
