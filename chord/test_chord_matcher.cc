@@ -29,26 +29,39 @@ TEST_F(ChordMatcherTest, NullConfig) {
 }
 
 TEST_F(MajorTriadTest, MajorTriadEmpty) {
-  auto chords = cm.Match(ns);
+  auto notes = ns.GetBits();
+  auto chords = cm.MatchRooted(notes, 0, notes.count());
   EXPECT_TRUE(chords.empty());
 }
 
-TEST_F(MajorTriadTest, MajorTriadMatch) {
+TEST_F(MajorTriadTest, CMajorTriadMatchRooted) {
   ns.NoteOn(0);
   ns.NoteOn(4);
   ns.NoteOn(7);
-  
-  auto chords = cm.Match(ns);
+  auto notes = ns.GetBits();
+  auto chords = cm.MatchRooted(notes, 0, notes.count());
   ASSERT_FALSE(chords.empty());
   EXPECT_EQ(chords[0].name, "C");
 }
 
-TEST_F(MajorTriadTest, DMajorTriadMatch) {
+TEST_F(MajorTriadTest, DMajorTriadMatchRooted) {
   ns.NoteOn(2);
   ns.NoteOn(6);
   ns.NoteOn(9);
-  
-  auto chords = cm.Match(ns);
+  auto notes = ns.GetBits();
+  notes >>= 2;
+  auto chords = cm.MatchRooted(notes, 2, notes.count());
   ASSERT_FALSE(chords.empty());
   EXPECT_EQ(chords[0].name, "D");
 }
+
+TEST_F(MajorTriadTest, CMajorTriadExtraNoteMatchRooted) {
+  ns.NoteOn(0);
+  ns.NoteOn(3);
+  ns.NoteOn(4);
+  ns.NoteOn(7);
+  auto notes = ns.GetBits();
+  auto chords = cm.MatchRooted(notes, 0, notes.count());
+  ASSERT_TRUE(chords.empty());
+}
+

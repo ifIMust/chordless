@@ -3,6 +3,7 @@
 #include "chord.h"
 
 #include "chord_matcher_config.h"
+#include "../note/note_constant.h"
 #include "../note/note_namer.h"
 
 #include <memory>
@@ -19,6 +20,8 @@ namespace chordless {
       ChordMatcher();
       
       std::vector<Chord> Match(const note::NoteState&) noexcept;
+      std::vector<Chord> MatchRooted(const std::bitset<::chordless::note::kNumNotes> &rooted_notes,
+				     unsigned char root_note, unsigned char num_notes) noexcept;
 
       void SetConfig(std::unique_ptr<ChordMatcherConfig> &&config);
       

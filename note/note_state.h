@@ -15,8 +15,10 @@ namespace chordless::note {
     // Number of notes that are "On". Can be 0-127.
     std::size_t NumNotesOn() const noexcept;
 
+    // Write the notes that are On as numeric values into the vector
     void GetNotes(std::vector<unsigned char> &notes) const;
 
+    // Access the internal bitset. Make a copy if using during application runtime.
     const std::bitset<kNumNotes>& GetBits() const noexcept;
       
   private:
