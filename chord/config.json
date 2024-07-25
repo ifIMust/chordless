@@ -16,7 +16,7 @@
 	    ]
 	},
 	{
-	    "name": "Major (First Inversion)",
+	    "name": "Major (1st Inversion)",
 	    "suffix": "",
 	    "tonic": 8,
 	    "patterns": [
@@ -27,6 +27,39 @@
 		{
 		    "num_notes": 2,
 		    "notes": [0, 8]
+		}
+	    ]
+	},
+	{
+	    "name": "Major (2nd Inversion)",
+	    "suffix": "",
+	    "tonic": 5,
+	    "patterns": [
+		{
+		    "num_notes": 3,
+		    "notes": [0, 5, 9]
+		}
+	    ]
+	},
+	{
+	    "name": "Major 7 (Root Position)",
+	    "suffix": "maj7",
+	    "tonic": 0,
+	    "patterns": [
+		{
+		    "num_notes": 4,
+		    "notes": [0, 4, 7, 11]
+		}
+	    ]
+	},
+	{
+	    "name": "Dominant 7 (Root Position)",
+	    "suffix": "7",
+	    "tonic": 0,
+	    "patterns": [
+		{
+		    "num_notes": 4,
+		    "notes": [0, 4, 7, 10]
 		}
 	    ]
 	},
@@ -46,6 +79,43 @@
 	    ]
 	},
 	{
+	    "name": "Minor (1st Inversion)",
+	    "suffix": "\u2098",
+	    "tonic": 9,
+	    "patterns": [
+		{
+		    "num_notes": 3,
+		    "notes": [0, 4, 9]
+		},
+		{
+		    "num_notes": 2,
+		    "notes": [0, 9]
+		}
+	    ]
+	},
+	{
+	    "name": "Minor (2nd Inversion)",
+	    "suffix": "\u2098",
+	    "tonic": 5,
+	    "patterns": [
+		{
+		    "num_notes": 3,
+		    "notes": [0, 5, 8]
+		}
+	    ]
+	},
+	{
+	    "name": "Minor 7 (Root Position)",
+	    "suffix": "\u20987",
+	    "tonic": 0,
+	    "patterns": [
+		{
+		    "num_notes": 4,
+		    "notes": [0, 3, 7, 10]
+		}
+	    ]
+	},
+	{
 	    "name": "Fifth Interval",
 	    "suffix": "5",
 	    "tonic": 0,
@@ -53,6 +123,17 @@
 		{
 		    "num_notes": 2,
 		    "notes": [0, 7]
+		}
+	    ]
+	},
+	{
+	    "name": "Fifth Interval (Inverted)",
+	    "suffix": "5",
+	    "tonic": 5,
+	    "patterns": [
+		{
+		    "num_notes": 2,
+		    "notes": [0, 5]
 		}
 	    ]
 	}
