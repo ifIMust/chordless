@@ -21,15 +21,16 @@ TEST_F(ChordMatcherConfigFactoryTest, MajorTriadSuffix) {
 
 TEST_F(ChordMatcherConfigFactoryTest, MajorTriadWidth) {
   auto c = factory.MakeConfig(chordless::chord::ChordType::MAJOR_TRIAD);
-  EXPECT_EQ(c->pattern_width, 8);
+  ASSERT_EQ(c->patterns.size(), 1);
+  EXPECT_EQ(c->patterns[0].pattern_width, 8);
 }
 
 TEST_F(ChordMatcherConfigFactoryTest, MajorTriadPatternBits) {
   auto c = factory.MakeConfig(chordless::chord::ChordType::MAJOR_TRIAD);
-  
-  EXPECT_TRUE(c->pattern.test(0));
-  EXPECT_TRUE(c->pattern.test(4));
-  EXPECT_TRUE(c->pattern.test(7));
+  ASSERT_EQ(c->patterns.size(), 1);
+  EXPECT_TRUE(c->patterns[0].pattern.test(0));
+  EXPECT_TRUE(c->patterns[0].pattern.test(4));
+  EXPECT_TRUE(c->patterns[0].pattern.test(7));
 }
 
 TEST_F(ChordMatcherConfigFactoryTest, MinorTriadName) {
@@ -39,15 +40,15 @@ TEST_F(ChordMatcherConfigFactoryTest, MinorTriadName) {
 
 TEST_F(ChordMatcherConfigFactoryTest, MinorTriadWidth) {
   auto c = factory.MakeConfig(chordless::chord::ChordType::MINOR_TRIAD);
-  EXPECT_EQ(c->pattern_width, 8);
+  EXPECT_EQ(c->patterns[0].pattern_width, 8);
 }
 
 TEST_F(ChordMatcherConfigFactoryTest, MinorTriadPatternBits) {
   auto c = factory.MakeConfig(chordless::chord::ChordType::MINOR_TRIAD);
-  
-  EXPECT_TRUE(c->pattern.test(0));
-  EXPECT_TRUE(c->pattern.test(3));
-  EXPECT_TRUE(c->pattern.test(7));
+  ASSERT_EQ(c->patterns.size(), 1);
+  EXPECT_TRUE(c->patterns[0].pattern.test(0));
+  EXPECT_TRUE(c->patterns[0].pattern.test(3));
+  EXPECT_TRUE(c->patterns[0].pattern.test(7));
 }
 
 TEST_F(ChordMatcherConfigFactoryTest, MinorTriadSuffix) {

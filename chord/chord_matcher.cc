@@ -22,7 +22,7 @@ namespace chordless::chord {
     NoteSet notes(note_state.GetBits());
 
     // Special cases: Null config or no notes played
-    if (config_->num_notes == 0 || notes.count() == 0) {
+    if (config_->patterns.empty() || notes.count() == 0) {
       return chords;
     }
 
@@ -35,9 +35,13 @@ namespace chordless::chord {
       ++root_note;
     }
 
-    if ((rooted_notes & config_->pattern) == config_->pattern) {
-      auto chord_name = note_namer_->Name(root_note) + config_->suffix;
-      chords.push_back(Chord{chord_name});
+    // If any pattern matches, we have a match and stop
+    for (const auto chord_pattern : config_->patterns) {
+      if ((rooted_notes & chord_pattern.pattern) == chord_pattern.pattern) {
+	auto chord_name = note_namer_->Name(root_note) + config_->suffix;
+	chords.push_back(Chord{chord_name});
+	break;
+      }
     }
     return chords;
   }
