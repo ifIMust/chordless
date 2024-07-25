@@ -7,11 +7,12 @@ namespace chordless::note {
     Q_OBJECT
     
   public:
-    virtual void Observe() noexcept = 0;
-
     virtual ~NoteObserver();
 
+  public slots:
+    virtual void OnNoteChange() noexcept = 0;
+
   signals:
-      virtual void textChanged(const QString &);
+      void textChanged(const QString &);
   };
 }

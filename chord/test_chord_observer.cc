@@ -25,7 +25,7 @@ protected:
 };
 
 TEST_F(ChordObserverTest, ObserveNothing) {
-  observer.Observe();
+  observer.OnNoteChange();
   ASSERT_EQ(1, spy.count());
   QList<QVariant> arguments = spy.takeFirst();
   EXPECT_EQ(0, arguments.at(0).toString().size());
@@ -35,7 +35,7 @@ TEST_F(ChordObserverTest, ObserveMajorWithNoMatchers) {
   note_state.NoteOn(0);
   note_state.NoteOn(4);
   note_state.NoteOn(7);
-  observer.Observe();
+  observer.OnNoteChange();
   ASSERT_EQ(1, spy.count());
   QList<QVariant> arguments = spy.takeFirst();
   EXPECT_EQ(0, arguments.at(0).toString().size());
@@ -48,7 +48,7 @@ TEST_F(ChordObserverTest, ObserveMajorWithNullMatcher) {
 
   auto matcher(std::make_unique<chordless::chord::ChordMatcher>());
   observer.AddMatcher(std::move(matcher));
-  observer.Observe();
+  observer.OnNoteChange();
 
   ASSERT_EQ(1, spy.count());
   QList<QVariant> arguments = spy.takeFirst();
@@ -63,7 +63,7 @@ TEST_F(ChordObserverTest, ObserveMajorWithMajorMatcher) {
   auto matcher(std::make_unique<chordless::chord::ChordMatcher>());
   matcher->SetConfig(config_factory.MakeConfig(chordless::chord::ChordType::MAJOR_TRIAD));
   observer.AddMatcher(std::move(matcher));
-  observer.Observe();
+  observer.OnNoteChange();
 
   const QString expected("C ");
   ASSERT_EQ(1, spy.count());
@@ -79,7 +79,7 @@ TEST_F(ChordObserverTest, ObserveMinorWithMinorMatcher) {
   auto matcher(std::make_unique<chordless::chord::ChordMatcher>());
   matcher->SetConfig(config_factory.MakeConfig(chordless::chord::ChordType::MINOR_TRIAD));
   observer.AddMatcher(std::move(matcher));
-  observer.Observe();
+  observer.OnNoteChange();
 
   const QString expected("C\u2098 ");
   ASSERT_EQ(1, spy.count());

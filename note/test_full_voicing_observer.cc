@@ -21,7 +21,7 @@ protected:
 };
 
 TEST_F(FullVoicingObserverTest, Empty) {
-  observer.Observe();
+  observer.OnNoteChange();
   ASSERT_EQ(1, spy.count());
   QList<QVariant> arguments = spy.takeFirst();
   EXPECT_EQ(0, arguments.at(0).toString().size());
@@ -30,7 +30,7 @@ TEST_F(FullVoicingObserverTest, Empty) {
 TEST_F(FullVoicingObserverTest, OneNote) {
   QString expected("C ");
   note_state.NoteOn(0);
-  observer.Observe();
+  observer.OnNoteChange();
   ASSERT_EQ(1, spy.count());
   QList<QVariant> arguments = spy.takeFirst();
   EXPECT_EQ(expected, arguments.at(0).toString());
@@ -41,7 +41,7 @@ TEST_F(FullVoicingObserverTest, ThreeNote) {
   note_state.NoteOn(0);
   note_state.NoteOn(16);
   note_state.NoteOn(31);
-  observer.Observe();
+  observer.OnNoteChange();
   ASSERT_EQ(1, spy.count());
   QList<QVariant> arguments = spy.takeFirst();
   EXPECT_EQ(expected, arguments.at(0).toString());
@@ -52,10 +52,10 @@ TEST_F(FullVoicingObserverTest, Reobserve) {
   note_state.NoteOn(0);
   note_state.NoteOn(16);
   note_state.NoteOn(31);
-  observer.Observe();
+  observer.OnNoteChange();
 
   note_state.NoteOff(16);
-  observer.Observe();
+  observer.OnNoteChange();
 
   ASSERT_EQ(2, spy.count());
   QList<QVariant> arguments = spy.takeLast();

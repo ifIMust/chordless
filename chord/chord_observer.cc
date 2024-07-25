@@ -6,14 +6,12 @@
 #include <sstream>
 #include <utility>
 
-#include <iostream>
-
 namespace chordless::chord {
   ChordObserver::ChordObserver(::chordless::note::NoteState &note_state) :
     note_state_(note_state)
   {}
 
-  void ChordObserver::Observe() noexcept {
+  void ChordObserver::OnNoteChange() noexcept {
     using NoteSet = std::bitset<::chordless::note::kNumNotes>;
     std::ostringstream ss;
     std::vector<Chord> all_chords;
@@ -26,10 +24,6 @@ namespace chordless::chord {
       while (!notes.test(0)) {
 	notes >>= 1;
 	++root_note;
-	if (root_note > ::chordless::note::kNumNotes) {
-	  std::cerr << "Would have looped forever! Broke the cycle.\n";
-	  break;
-	}
       }
       
       for (const auto &cm : matchers_) {

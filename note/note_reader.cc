@@ -32,14 +32,13 @@ namespace chordless::note {
 	  this->note_state_.NoteOff(event.note_);
 	}
 
-	for (auto o : observers_) {
-	  o.get().Observe();
-	}
+	emit noteChange();
       }
     }
   }
 
   void NoteReader::AddObserver(NoteObserver &o) {
+    connect(this, SIGNAL(noteChange()), &o, SLOT(OnNoteChange()));
     observers_.push_back(std::ref(o));
   }
 }

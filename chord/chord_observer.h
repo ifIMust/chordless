@@ -18,8 +18,8 @@ namespace chordless {
     public:
       explicit ChordObserver(::chordless::note::NoteState &note_state);
     
-      void Observe() noexcept override;
-
+      void OnNoteChange() noexcept override;
+      
       void AddMatcher(std::unique_ptr<ChordMatcher> &&matcher);
       
       ChordObserver(const ChordObserver&) = delete;

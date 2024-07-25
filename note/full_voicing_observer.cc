@@ -12,7 +12,7 @@ namespace chordless::note {
     note_state_(ns), note_namer_(std::make_unique<BasicNoteNamer>())
   {}
 
-  void FullVoicingObserver::Observe() noexcept {
+  void FullVoicingObserver::OnNoteChange() noexcept {
     std::vector<unsigned char> notes;
     note_state_.GetNotes(notes);
 

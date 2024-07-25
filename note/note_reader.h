@@ -25,6 +25,9 @@ namespace chordless {
 
       void AddObserver(NoteObserver&);
 
+    signals:
+      void noteChange();
+
     private:
       input::NoteInput &note_input_;
       NoteState &note_state_;

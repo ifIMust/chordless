@@ -14,7 +14,7 @@ namespace chordless {
     public:
       explicit FullVoicingObserver(const NoteState&);
 
-      void Observe() noexcept;
+      void OnNoteChange() noexcept override;
 
       void SetNoteNamer(std::unique_ptr<NoteNamer>&&) noexcept;
       
