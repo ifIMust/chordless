@@ -64,6 +64,39 @@
 	    ]
 	},
 	{
+	    "name": "Dominant 7 (1st Inversion)",
+	    "suffix": "7",
+	    "tonic": 8,
+	    "patterns": [
+		{
+		    "num_notes": 4,
+		    "notes": [0, 3, 6, 8]
+		}
+	    ]
+	},
+	{
+	    "name": "Dominant 7 (2nd Inversion)",
+	    "suffix": "7",
+	    "tonic": 5,
+	    "patterns": [
+		{
+		    "num_notes": 4,
+		    "notes": [0, 3, 5, 9]
+		}
+	    ]
+	},
+	{
+	    "name": "Dominant 7 (3rd Inversion)",
+	    "suffix": "7",
+	    "tonic": 2,
+	    "patterns": [
+		{
+		    "num_notes": 4,
+		    "notes": [0, 2, 6, 9]
+		}
+	    ]
+	},
+	{
 	    "name": "Minor",
 	    "suffix": "\u2098",
 	    "tonic": 0,
