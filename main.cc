@@ -83,12 +83,9 @@ int main(int argc, char **argv) {
   chordless::chord::ChordObserver chord_observer(note_state, *chord_label);
   configureChordObserver(chord_observer);
   note_reader.AddObserver(chord_observer);
+  QObject::connect(&chord_observer, SIGNAL(textChanged(const QString&)), chord_label, SLOT(setText(const QString&)));
 
   note_reader.start();
-  
-  QObject::connect(&app, &QApplication::aboutToQuit, [&note_reader]() {
-    note_reader.Stop();
-  });
   
   window.show();
   return app.exec();

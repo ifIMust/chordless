@@ -19,11 +19,9 @@ namespace chordless {
       
     public:
       NoteReader(input::NoteInput &, NoteState &);
+      ~NoteReader();
 
       void run() override;
-      
-      void Run();
-      void Stop();
 
       void AddObserver(NoteObserver&);
 

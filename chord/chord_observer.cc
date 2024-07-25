@@ -43,7 +43,7 @@ namespace chordless::chord {
 	ss << c.name << " ";
       }
     }
-    text_setter_.SetText(ss.str());
+    emit textChanged(QString(ss.str().c_str()));
   }
 
   void ChordObserver::AddMatcher(std::unique_ptr<ChordMatcher> &&matcher) {

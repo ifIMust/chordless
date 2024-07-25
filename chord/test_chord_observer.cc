@@ -4,12 +4,18 @@
 #include "../note/note_state.h"
 #include "../ui/mock/mock_text_setter.h"
 
-#include <memory>
+#include <QSignalSpy>
+
 #include <gtest/gtest.h>
+
+#include <memory>
 
 class ChordObserverTest : public testing::Test {
 public:
-  ChordObserverTest() : observer(note_state, text_setter) {}
+  ChordObserverTest() :
+    observer(note_state, text_setter),
+    spy(&observer, SIGNAL(textChanged(const QString&)))
+  {}
 
 protected:
   chordless::chord::ChordMatcherConfigFactory config_factory;
@@ -17,11 +23,14 @@ protected:
   chordless::note::NoteState note_state;
   chordless::ui::MockTextSetter text_setter;
   chordless::chord::ChordObserver observer;
+  QSignalSpy spy;
 };
 
 TEST_F(ChordObserverTest, ObserveNothing) {
   observer.Observe();
-  EXPECT_TRUE(text_setter.text_.empty());
+  ASSERT_EQ(1, spy.count());
+  QList<QVariant> arguments = spy.takeFirst();
+  EXPECT_EQ(0, arguments.at(0).toString().size());
 }
 
 TEST_F(ChordObserverTest, ObserveMajorWithNoMatchers) {
@@ -29,7 +38,9 @@ TEST_F(ChordObserverTest, ObserveMajorWithNoMatchers) {
   note_state.NoteOn(4);
   note_state.NoteOn(7);
   observer.Observe();
-  EXPECT_TRUE(text_setter.text_.empty());
+  ASSERT_EQ(1, spy.count());
+  QList<QVariant> arguments = spy.takeFirst();
+  EXPECT_EQ(0, arguments.at(0).toString().size());
 }
 
 TEST_F(ChordObserverTest, ObserveMajorWithNullMatcher) {
@@ -40,7 +51,10 @@ TEST_F(ChordObserverTest, ObserveMajorWithNullMatcher) {
   auto matcher(std::make_unique<chordless::chord::ChordMatcher>());
   observer.AddMatcher(std::move(matcher));
   observer.Observe();
-  EXPECT_TRUE(text_setter.text_.empty());
+
+  ASSERT_EQ(1, spy.count());
+  QList<QVariant> arguments = spy.takeFirst();
+  EXPECT_EQ(0, arguments.at(0).toString().size());
 }
 
 TEST_F(ChordObserverTest, ObserveMajorWithMajorMatcher) {
@@ -53,8 +67,10 @@ TEST_F(ChordObserverTest, ObserveMajorWithMajorMatcher) {
   observer.AddMatcher(std::move(matcher));
   observer.Observe();
 
-  const std::string expected("C ");
-  EXPECT_EQ(expected, text_setter.text_);
+  const QString expected("C ");
+  ASSERT_EQ(1, spy.count());
+  QList<QVariant> arguments = spy.takeFirst();
+  EXPECT_EQ(expected, arguments.at(0).toString());
 }
 
 TEST_F(ChordObserverTest, ObserveMinorWithMinorMatcher) {
@@ -67,6 +83,8 @@ TEST_F(ChordObserverTest, ObserveMinorWithMinorMatcher) {
   observer.AddMatcher(std::move(matcher));
   observer.Observe();
 
-  const std::string expected("C\u2098 ");
-  EXPECT_EQ(expected, text_setter.text_);
+  const QString expected("C\u2098 ");
+  ASSERT_EQ(1, spy.count());
+  QList<QVariant> arguments = spy.takeFirst();
+  EXPECT_EQ(expected, arguments.at(0).toString());
 }

@@ -5,12 +5,15 @@
 #include "note_state.h"
 #include "../input/note_input.h"
 
-#include <thread>
-
 namespace chordless::note {
   NoteReader::NoteReader(input::NoteInput &input, NoteState &state) :
     note_input_(input), note_state_(state)
   {}
+
+  ~NoteReader::NoteReader {
+    read_input_.store(false);
+    wait();
+  }
 
   void NoteReader::run() {
     read_input_.store(true);
@@ -20,8 +23,8 @@ namespace chordless::note {
       // Sleep if we haven't seen note action, to keep CPU usage down.
       auto event = this->note_input_.Read();
       if (event.type_ == NoteEventType::NONE) {
-	using namespace std::chrono_literals;
-	std::this_thread::sleep_for(50ms);
+	// 50 ms
+	msleep(50);
       } else {
 	if (event.type_ == NoteEventType::NOTE_ON) {
 	  this->note_state_.NoteOn(event.note_);
@@ -34,11 +37,6 @@ namespace chordless::note {
 	}
       }
     }
-  }
-
-  void NoteReader::Stop() {
-    read_input_.store(false);
-    wait();
   }
 
   void NoteReader::AddObserver(NoteObserver &o) {
