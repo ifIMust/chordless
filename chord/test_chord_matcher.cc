@@ -22,9 +22,9 @@ public:
   }
 };
 
-
 TEST_F(ChordMatcherTest, NullConfig) {
-  auto chords = cm.Match(ns);
+  auto notes = ns.GetBits();
+  auto chords = cm.MatchRooted(notes, 0, notes.count());
   EXPECT_TRUE(chords.empty());
 }
 

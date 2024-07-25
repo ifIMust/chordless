@@ -19,7 +19,6 @@ namespace chordless {
     public:
       ChordMatcher();
       
-      std::vector<Chord> Match(const note::NoteState&) noexcept;
       std::vector<Chord> MatchRooted(const std::bitset<::chordless::note::kNumNotes> &rooted_notes,
 				     unsigned char root_note, unsigned char num_notes) noexcept;
 
