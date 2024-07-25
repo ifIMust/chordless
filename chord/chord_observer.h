@@ -11,16 +11,12 @@ namespace chordless {
   namespace note {
     class NoteState;
   }
-  namespace ui {
-    class TextSetter;
-  }
-  
+
   namespace chord {
     class ChordObserver : public ::chordless::note::NoteObserver
     {
     public:
-      explicit ChordObserver(::chordless::note::NoteState &note_state,
-			     ::chordless::ui::TextSetter &text_setter);
+      explicit ChordObserver(::chordless::note::NoteState &note_state);
     
       void Observe() noexcept override;
 
@@ -32,7 +28,6 @@ namespace chordless {
     private:
       std::vector<std::unique_ptr<ChordMatcher>> matchers_;
       const ::chordless::note::NoteState &note_state_;
-      chordless::ui::TextSetter &text_setter_;
     };
   }
 }

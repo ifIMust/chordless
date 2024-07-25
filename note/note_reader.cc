@@ -10,7 +10,7 @@ namespace chordless::note {
     note_input_(input), note_state_(state)
   {}
 
-  ~NoteReader::NoteReader {
+  NoteReader::~NoteReader() {
     read_input_.store(false);
     wait();
   }

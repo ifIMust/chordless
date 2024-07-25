@@ -6,9 +6,10 @@
 #include "note/note_state.h"
 #include "note/note_reader.h"
 #include "note/scientific_note_namer.h"
-#include "ui/chord_label.h"
 
 #include <QApplication>
+#include <QFont>
+#include <QLabel>
 
 #include <iostream>
 #include <memory>
@@ -53,22 +54,23 @@ int main(int argc, char **argv) {
   window.setFixedSize(window_w, window_h);
   QFont mini_font("Helvetica", 10);
 
-  auto all_notes_label = new chordless::ui::ChordLabel(&window);
+  auto all_notes_label = new QLabel(&window);
   all_notes_label->setGeometry(0, 0, full_voice_label_w, 10);
   all_notes_label->setFont(mini_font);
   all_notes_label->setText("All Notes");
 
-  auto chords_label = new chordless::ui::ChordLabel(&window);
+  auto chords_label = new QLabel(&window);
   chords_label->setGeometry(0, chord_label_y - 10, chord_label_w, 10);
   chords_label->setFont(mini_font);
   chords_label->setText("Chords");
   
   QFont font("Helvetica", 24);
-  auto full_voice_label = new chordless::ui::ChordLabel(&window);
+  auto full_voice_label = new QLabel(&window);
   full_voice_label->setGeometry(full_voice_label_x, full_voice_label_y, full_voice_label_w, full_voice_label_h);
   full_voice_label->setFont(font);
+  full_voice_label->setText("Play to begin");
 
-  auto chord_label = new chordless::ui::ChordLabel(&window);
+  auto chord_label = new QLabel(&window);
   chord_label->setGeometry(chord_label_x, chord_label_y, chord_label_w, chord_label_h);
   chord_label->setFont(font);
 
@@ -80,7 +82,7 @@ int main(int argc, char **argv) {
   note_reader.AddObserver(full_voicing);
   QObject::connect(&full_voicing, SIGNAL(textChanged(const QString&)), full_voice_label, SLOT(setText(const QString&)));
 
-  chordless::chord::ChordObserver chord_observer(note_state, *chord_label);
+  chordless::chord::ChordObserver chord_observer(note_state);
   configureChordObserver(chord_observer);
   note_reader.AddObserver(chord_observer);
   QObject::connect(&chord_observer, SIGNAL(textChanged(const QString&)), chord_label, SLOT(setText(const QString&)));

@@ -1,7 +1,6 @@
 #include "full_voicing_observer.h"
 
 #include "note_state.h"
-#include "../ui/mock/mock_text_setter.h"
 
 #include <QSignalSpy>
 

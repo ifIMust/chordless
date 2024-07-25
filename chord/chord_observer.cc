@@ -2,7 +2,6 @@
 
 #include "../note/note_constant.h"
 #include "../note/note_state.h"
-#include "../ui/text_setter.h"
 
 #include <sstream>
 #include <utility>
@@ -10,9 +9,8 @@
 #include <iostream>
 
 namespace chordless::chord {
-  ChordObserver::ChordObserver(::chordless::note::NoteState &note_state,
-			       ::chordless::ui::TextSetter &text_setter) :
-    note_state_(note_state), text_setter_(text_setter)
+  ChordObserver::ChordObserver(::chordless::note::NoteState &note_state) :
+    note_state_(note_state)
   {}
 
   void ChordObserver::Observe() noexcept {

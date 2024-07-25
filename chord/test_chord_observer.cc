@@ -2,7 +2,6 @@
 
 #include "chord_matcher_config_factory.h"
 #include "../note/note_state.h"
-#include "../ui/mock/mock_text_setter.h"
 
 #include <QSignalSpy>
 
@@ -13,7 +12,7 @@
 class ChordObserverTest : public testing::Test {
 public:
   ChordObserverTest() :
-    observer(note_state, text_setter),
+    observer(note_state),
     spy(&observer, SIGNAL(textChanged(const QString&)))
   {}
 
@@ -21,7 +20,6 @@ protected:
   chordless::chord::ChordMatcherConfigFactory config_factory;
   
   chordless::note::NoteState note_state;
-  chordless::ui::MockTextSetter text_setter;
   chordless::chord::ChordObserver observer;
   QSignalSpy spy;
 };
