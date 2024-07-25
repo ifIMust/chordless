@@ -3,11 +3,12 @@
 chordless is a MIDI note analyzer that runs on Linux.
 Any modern Linux version (i.e. with ALSA) should work.
 
-The initial project goals are not yet completed.
+The initial project goals are partially completed.
 
 ### Project Goals
 - Display currently "on" notes from a MIDI instrument (DONE)
-- Display chord names matching the note structure (IN PROGRESS)
+- Display chord names matching the note structure (DONE)
+- Flesh out supported chords with all typical chord types and inversions (IN PROGRESS)
 - Customize displayed info using GUI controls (NOT done)
 - Conform to the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
 
@@ -23,6 +24,7 @@ Requirements (with example Debian/Ubuntu package names):
 - Qt dev files (qt6-base-dev)
 - OpenGL dev files required by Qt6 (libgl1-mesa-dev)
 - ALSA dev files (libasound2-dev)
+- Boost JSON dev files (libboost-json1.81-dev)
 - An internet connection, since gtest is downloaded from github during the build
 
 Build instructions
@@ -44,7 +46,7 @@ Use an ALSA utility such as `aconnectgui` to connect your MIDI instrument to cho
 ## Desired features
 - Select sharps or flats preference with a UI widget.
 - Toggle numeric subscript visibility with a UI widget.
-- Detect chord patterns and display the chord names.
+- Support specifying config file as a command line argument
 
 ## Further work
 - Select key/mode, for improved chord naming/analysis

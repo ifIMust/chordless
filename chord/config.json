@@ -49,6 +49,43 @@
 		{
 		    "num_notes": 4,
 		    "notes": [0, 4, 7, 11]
+		},
+		{
+		    "num_notes": 2,
+		    "notes": [0, 11]
+		}
+	    ]
+	},
+	{
+	    "name": "Major 7 (1st Inversion)",
+	    "suffix": "maj7",
+	    "tonic": 8,
+	    "patterns": [
+		{
+		    "num_notes": 4,
+		    "notes": [0, 3, 7, 8]
+		}
+	    ]
+	},
+	{
+	    "name": "Major 7 (2nd Inversion)",
+	    "suffix": "maj7",
+	    "tonic": 5,
+	    "patterns": [
+		{
+		    "num_notes": 4,
+		    "notes": [0, 4, 5, 9]
+		}
+	    ]
+	},
+	{
+	    "name": "Major 7 (3rd Inversion)",
+	    "suffix": "maj7",
+	    "tonic": 1,
+	    "patterns": [
+		{
+		    "num_notes": 4,
+		    "notes": [0, 1, 5, 8]
 		}
 	    ]
 	},
@@ -71,6 +108,10 @@
 		{
 		    "num_notes": 4,
 		    "notes": [0, 3, 6, 8]
+		},
+		{
+		    "num_notes": 3,
+		    "notes": [0, 6, 8]
 		}
 	    ]
 	},
@@ -82,6 +123,10 @@
 		{
 		    "num_notes": 4,
 		    "notes": [0, 3, 5, 9]
+		},
+		{
+		    "num_notes": 3,
+		    "notes": [0, 3, 5]
 		}
 	    ]
 	},
