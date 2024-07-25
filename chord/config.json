@@ -1,0 +1,32 @@
+{
+    "chords": [
+	{
+	    "name": "Major",
+	    "suffix": "",
+	    "patterns": [
+		{
+		    "num_notes": 3,
+		    "notes": [0, 4, 7]
+		},
+		{
+		    "num_notes": 2,
+		    "notes": [0, 4]
+		}
+	    ]
+	},
+	{
+	    "name": "Minor",
+	    "suffix": "\u2098",
+	    "patterns": [
+		{
+		    "num_notes": 3,
+		    "notes": [0, 3, 7]
+		},
+		{
+		    "num_notes": 2,
+		    "notes": [0, 3]
+		}
+	    ]
+	}
+    ]
+}

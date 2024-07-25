@@ -1,5 +1,4 @@
-#include "chord/chord_matcher_config_factory.h"
-#include "chord/chord_matcher.h"
+#include "chord/chord_matcher_reader.h"
 #include "chord/chord_observer.h"
 #include "input/alsa/alsa_input.h"
 #include "note/full_voicing_observer.h"
@@ -27,18 +26,6 @@ constexpr int chord_label_x = 10;
 constexpr int chord_label_y = full_voice_label_y + full_voice_label_h + 10;
 constexpr int chord_label_w = full_voice_label_w;
 constexpr int chord_label_h = full_voice_label_h;
-
-void configureChordObserver(chordless::chord::ChordObserver &c) {
-  chordless::chord::ChordMatcherConfigFactory config_factory;
-  
-  auto major(std::make_unique<chordless::chord::ChordMatcher>());
-  major->SetConfig(config_factory.MakeConfig(chordless::chord::ChordType::MAJOR_TRIAD));
-  c.AddMatcher(std::move(major));
-
-  auto minor(std::make_unique<chordless::chord::ChordMatcher>());
-  minor->SetConfig(config_factory.MakeConfig(chordless::chord::ChordType::MINOR_TRIAD));
-  c.AddMatcher(std::move(minor));
-}
 
 int main(int argc, char **argv) {
   std::cout << "chordless v" << CHORDLESS_VERSION << std::endl;
@@ -83,7 +70,7 @@ int main(int argc, char **argv) {
   QObject::connect(&full_voicing, SIGNAL(textChanged(const QString&)), full_voice_label, SLOT(setText(const QString&)));
 
   chordless::chord::ChordObserver chord_observer(note_state);
-  configureChordObserver(chord_observer);
+  chordless::chord::configureChordObserver(chord_observer, "../chord/config.json");
   note_reader.AddObserver(chord_observer);
   QObject::connect(&chord_observer, SIGNAL(textChanged(const QString&)), chord_label, SLOT(setText(const QString&)));
 

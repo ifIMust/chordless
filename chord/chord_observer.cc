@@ -7,12 +7,26 @@
 #include <utility>
 
 namespace chordless::chord {
+  using NoteSet = std::bitset<::chordless::note::kNumNotes>;
+
+  NoteSet ChordObserver::UniqueNotes(const NoteSet &n) {
+    constexpr auto unique_mask = 0x0fff;
+    constexpr NoteSet unique_filter(unique_mask);
+
+    NoteSet notes(n);
+    NoteSet unique_notes;
+    while (notes.any()) {
+      unique_notes |= unique_filter & notes;
+      notes >>= 12;
+    }
+    return unique_notes;
+  }
+
   ChordObserver::ChordObserver(::chordless::note::NoteState &note_state) :
     note_state_(note_state)
   {}
 
   void ChordObserver::OnNoteChange() noexcept {
-    using NoteSet = std::bitset<::chordless::note::kNumNotes>;
     std::ostringstream ss;
     std::vector<Chord> all_chords;
 
@@ -25,9 +39,12 @@ namespace chordless::chord {
 	notes >>= 1;
 	++root_note;
       }
+
+      const auto unique_notes = UniqueNotes(notes);
+      const auto num_unique_notes = unique_notes.count();
       
       for (const auto &cm : matchers_) {
-	auto chords = cm->MatchRooted(notes, root_note, num_notes);
+	auto chords = cm->MatchRooted(unique_notes, root_note, num_unique_notes);
 	all_chords.insert(all_chords.cend(), chords.cbegin(), chords.cend());
       }
 

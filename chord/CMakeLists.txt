@@ -12,6 +12,9 @@ add_executable(test_chord_matcher_config_factory test_chord_matcher_config_facto
 target_link_libraries(test_chord_matcher_config_factory gtest_main chord_matcher_config_factory)
 add_test(NAME chord_matcher_config_factory_test COMMAND test_chord_matcher_config_factory)
 
+add_library(chord_matcher_reader chord_matcher_reader.cc chord_matcher_reader.h)
+target_link_libraries(chord_matcher_reader PRIVATE Qt6::Core boost_json chord_matcher)
+
 add_library(chord_observer chord_observer.cc chord_observer.h)
 target_link_libraries(chord_observer PRIVATE Qt6::Core chord_matcher note_observer)
 

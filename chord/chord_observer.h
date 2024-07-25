@@ -21,6 +21,8 @@ namespace chordless {
       void OnNoteChange() noexcept override;
       
       void AddMatcher(std::unique_ptr<ChordMatcher> &&matcher);
+
+      static std::bitset<::chordless::note::kNumNotes> UniqueNotes(const std::bitset<::chordless::note::kNumNotes> &n);
       
       ChordObserver(const ChordObserver&) = delete;
       ChordObserver& operator=(const ChordObserver&) = delete;

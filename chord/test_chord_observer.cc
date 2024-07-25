@@ -86,3 +86,57 @@ TEST_F(ChordObserverTest, ObserveMinorWithMinorMatcher) {
   QList<QVariant> arguments = spy.takeFirst();
   EXPECT_EQ(expected, arguments.at(0).toString());
 }
+
+TEST_F(ChordObserverTest, ObserveMinorWithMinorMatcherExtraC) {
+  note_state.NoteOn(0);
+  note_state.NoteOn(3);
+  note_state.NoteOn(7);
+  note_state.NoteOn(12);
+
+  auto matcher(std::make_unique<chordless::chord::ChordMatcher>());
+  matcher->SetConfig(config_factory.MakeConfig(chordless::chord::ChordType::MINOR_TRIAD));
+  observer.AddMatcher(std::move(matcher));
+  observer.OnNoteChange();
+
+  const QString expected("C\u2098 ");
+  ASSERT_EQ(1, spy.count());
+  QList<QVariant> arguments = spy.takeFirst();
+  EXPECT_EQ(expected, arguments.at(0).toString());
+}
+
+TEST_F(ChordObserverTest, UniqueNotesCMajTriad) {
+  note_state.NoteOn(0);
+  note_state.NoteOn(4);
+  note_state.NoteOn(7);
+  auto u = chordless::chord::ChordObserver::UniqueNotes(note_state.GetBits());
+  EXPECT_EQ(3, u.count());
+}
+
+TEST_F(ChordObserverTest, UniqueNotesCMajCadence) {
+  note_state.NoteOn(0);
+  note_state.NoteOn(4);
+  note_state.NoteOn(7);
+  note_state.NoteOn(12);
+  auto u = chordless::chord::ChordObserver::UniqueNotes(note_state.GetBits());
+  EXPECT_EQ(3, u.count());
+}
+
+TEST_F(ChordObserverTest, UniqueNotesCMajMassiveCadence) {
+  note_state.NoteOn(0);
+  note_state.NoteOn(7);
+  note_state.NoteOn(12);
+  note_state.NoteOn(16);
+  note_state.NoteOn(19);
+  auto u = chordless::chord::ChordObserver::UniqueNotes(note_state.GetBits());
+  EXPECT_EQ(3, u.count());
+}
+
+TEST_F(ChordObserverTest, UniqueNotesCMaj7) {
+  note_state.NoteOn(0);
+  note_state.NoteOn(7);
+  note_state.NoteOn(12);
+  note_state.NoteOn(16);
+  note_state.NoteOn(18);
+  auto u = chordless::chord::ChordObserver::UniqueNotes(note_state.GetBits());
+  EXPECT_EQ(4, u.count());
+}
