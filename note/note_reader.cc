@@ -12,34 +12,33 @@ namespace chordless::note {
     note_input_(input), note_state_(state)
   {}
 
-  void NoteReader::Run() {
+  void NoteReader::run() {
     read_input_.store(true);
-    read_fut_ = std::async(std::launch::async, [this](){
-      while (this->read_input_.load()) {
-	// Non-blocking read, so the app can shut down cleanly.
-	// Sleep if we haven't seen note action, to keep CPU usage down.
-	auto event = this->note_input_.Read();
-	if (event.type_ == NoteEventType::NONE) {
-	  using namespace std::chrono_literals;
-	  std::this_thread::sleep_for(50ms);
-	} else {
-	  if (event.type_ == NoteEventType::NOTE_ON) {
-	    this->note_state_.NoteOn(event.note_);
-	  } else {
-	    this->note_state_.NoteOff(event.note_);
-	  }
 
-	  for (auto o : observers_) {
-	    o.get().Observe();
-	  }
+    while (this->read_input_.load()) {
+      // Non-blocking read, so the app can shut down cleanly.
+      // Sleep if we haven't seen note action, to keep CPU usage down.
+      auto event = this->note_input_.Read();
+      if (event.type_ == NoteEventType::NONE) {
+	using namespace std::chrono_literals;
+	std::this_thread::sleep_for(50ms);
+      } else {
+	if (event.type_ == NoteEventType::NOTE_ON) {
+	  this->note_state_.NoteOn(event.note_);
+	} else {
+	  this->note_state_.NoteOff(event.note_);
+	}
+
+	for (auto o : observers_) {
+	  o.get().Observe();
 	}
       }
-    });
+    }
   }
-  
+
   void NoteReader::Stop() {
     read_input_.store(false);
-    read_fut_.wait();
+    wait();
   }
 
   void NoteReader::AddObserver(NoteObserver &o) {

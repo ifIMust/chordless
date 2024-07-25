@@ -21,14 +21,12 @@ FetchContent_MakeAvailable(googletest)
 
 include(CTest)
 enable_testing()
-add_subdirectory(note)
+
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Test Widgets)
+qt_standard_project_setup()
 add_subdirectory(input)
 add_subdirectory(chord)
-
-# Qt components follow
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
-qt_standard_project_setup()
-
+add_subdirectory(note)
 add_subdirectory(ui)
 
 qt_add_executable(chordless main.cc)

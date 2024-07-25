@@ -2,15 +2,14 @@
 
 #include "basic_note_namer.h"
 #include "note_state.h"
-#include "../ui/text_setter.h"
 
 #include <sstream>
 #include <string>
 #include <vector>
 
 namespace chordless::note {
-  FullVoicingObserver::FullVoicingObserver(const NoteState &ns, chordless::ui::TextSetter &ts) :
-    note_state_(ns), text_setter_(ts), note_namer_(std::make_unique<BasicNoteNamer>())
+  FullVoicingObserver::FullVoicingObserver(const NoteState &ns) :
+    note_state_(ns), note_namer_(std::make_unique<BasicNoteNamer>())
   {}
 
   void FullVoicingObserver::Observe() noexcept {
@@ -21,7 +20,7 @@ namespace chordless::note {
     for (auto n : notes) {
       ss << note_namer_->Name(n, true) << " ";
     }
-    text_setter_.SetText(ss.str());
+    emit textChanged(QString(ss.str().c_str()));
   }
 
   void FullVoicingObserver::SetNoteNamer(std::unique_ptr<NoteNamer> &&n) noexcept {

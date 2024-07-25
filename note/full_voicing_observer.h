@@ -7,16 +7,12 @@
 #include <memory>
 
 namespace chordless {
-  namespace ui {
-    class TextSetter;
-  }
-
   namespace note {
     class NoteState;    
     
     class FullVoicingObserver : public NoteObserver {
     public:
-      explicit FullVoicingObserver(const NoteState&, chordless::ui::TextSetter&);
+      explicit FullVoicingObserver(const NoteState&);
 
       void Observe() noexcept;
 
@@ -27,7 +23,6 @@ namespace chordless {
 
     private:
       const NoteState& note_state_;
-      chordless::ui::TextSetter &text_setter_;
       std::unique_ptr<NoteNamer> note_namer_;
     };
   }

@@ -75,15 +75,16 @@ int main(int argc, char **argv) {
   chordless::note::NoteState note_state;
   chordless::note::NoteReader note_reader(alsa_input, note_state);
 
-  chordless::note::FullVoicingObserver full_voicing(note_state, *full_voice_label);
+  chordless::note::FullVoicingObserver full_voicing(note_state);
   full_voicing.SetNoteNamer(std::make_unique<chordless::note::ScientificNoteNamer>());
   note_reader.AddObserver(full_voicing);
+  QObject::connect(&full_voicing, SIGNAL(textChanged(const QString&)), full_voice_label, SLOT(setText(const QString&)));
 
   chordless::chord::ChordObserver chord_observer(note_state, *chord_label);
   configureChordObserver(chord_observer);
   note_reader.AddObserver(chord_observer);
 
-  note_reader.Run();
+  note_reader.start();
   
   QObject::connect(&app, &QApplication::aboutToQuit, [&note_reader]() {
     note_reader.Stop();

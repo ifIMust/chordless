@@ -3,42 +3,53 @@
 #include "note_state.h"
 #include "../ui/mock/mock_text_setter.h"
 
+#include <QSignalSpy>
+
 #include <gtest/gtest.h>
 #include <string>
 
 class FullVoicingObserverTest : public testing::Test {
 public:
-  FullVoicingObserverTest() : observer(note_state, text_setter) {}
+  FullVoicingObserverTest() :
+    observer(note_state),
+    spy(&observer, SIGNAL(textChanged(const QString&)))
+  {}
   
 protected:
-  chordless::ui::MockTextSetter text_setter;
   chordless::note::NoteState note_state;
   chordless::note::FullVoicingObserver observer;
+  QSignalSpy spy;
 };
 
 TEST_F(FullVoicingObserverTest, Empty) {
   observer.Observe();
-  EXPECT_TRUE(text_setter.text_.empty());
+  ASSERT_EQ(1, spy.count());
+  QList<QVariant> arguments = spy.takeFirst();
+  EXPECT_EQ(0, arguments.at(0).toString().size());
 }
 
 TEST_F(FullVoicingObserverTest, OneNote) {
-  std::string expected("C ");
+  QString expected("C ");
   note_state.NoteOn(0);
   observer.Observe();
-  EXPECT_EQ(expected, text_setter.text_);
+  ASSERT_EQ(1, spy.count());
+  QList<QVariant> arguments = spy.takeFirst();
+  EXPECT_EQ(expected, arguments.at(0).toString());
 }
 
 TEST_F(FullVoicingObserverTest, ThreeNote) {
-  std::string expected("C E G ");
+  QString expected("C E G ");
   note_state.NoteOn(0);
   note_state.NoteOn(16);
   note_state.NoteOn(31);
   observer.Observe();
-  EXPECT_EQ(expected, text_setter.text_);
+  ASSERT_EQ(1, spy.count());
+  QList<QVariant> arguments = spy.takeFirst();
+  EXPECT_EQ(expected, arguments.at(0).toString());
 }
 
 TEST_F(FullVoicingObserverTest, Reobserve) {
-  std::string expected("C G ");
+  QString expected("C G ");
   note_state.NoteOn(0);
   note_state.NoteOn(16);
   note_state.NoteOn(31);
@@ -46,5 +57,8 @@ TEST_F(FullVoicingObserverTest, Reobserve) {
 
   note_state.NoteOff(16);
   observer.Observe();
-  EXPECT_EQ(expected, text_setter.text_);
+
+  ASSERT_EQ(2, spy.count());
+  QList<QVariant> arguments = spy.takeLast();
+  EXPECT_EQ(expected, arguments.at(0).toString());
 }
