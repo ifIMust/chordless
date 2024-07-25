@@ -10,5 +10,6 @@ namespace chordless::chord {
     std::string name;
     std::string suffix;
     std::vector<ChordPattern> patterns;
+    unsigned char tonic {0};
   };
 }

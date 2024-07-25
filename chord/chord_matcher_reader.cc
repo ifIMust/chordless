@@ -34,6 +34,7 @@ namespace chordless::chord {
 	  auto chord_obj = chord.as_object();
 	  cfg->name = chord_obj.at("name").as_string();
 	  cfg->suffix = chord_obj.at("suffix").as_string();
+	  cfg->tonic = static_cast<unsigned char>(chord_obj.at("tonic").as_int64());
 	  auto patterns = chord_obj.at("patterns").as_array();
 	  for (auto pattern : patterns) {
 	    auto pat_obj = pattern.as_object();
