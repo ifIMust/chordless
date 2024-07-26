@@ -1,0 +1,72 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+	"major": 3,
+	"minor": 25,
+	"patch": 0
+    },
+    "configurePresets": [
+	{
+	    "name": "debug",
+	    "displayName": "Debug config",
+	    "description": "Debug build",
+	    "generator": "Ninja",
+	    "binaryDir": "${sourceDir}/build/debug",
+	    "cacheVariables": {
+		"CMAKE_BUILD_TYPE": "Debug"
+	    }
+	},
+	{
+	    "name": "release",
+	    "displayName": "Release config",
+	    "description": "Stripped and Optimized release build",
+	    "generator": "Ninja",
+	    "binaryDir": "${sourceDir}/build/release",
+	    "cacheVariables": {
+		"CMAKE_BUILD_TYPE": "Release"
+	    }
+	}
+    ],
+    "buildPresets": [
+	{
+	    "name": "debug",
+	    "displayName": "Debug Build",
+	    "configurePreset": "debug",
+	    "jobs": 6
+	},
+	{
+	    "name": "release",
+	    "displayName": "Release Build",
+	    "configurePreset": "release",
+	    "jobs": 6
+	}
+    ],
+    "workflowPresets": [
+	{
+	    "name": "debug",
+	    "steps": [
+		{
+		    "type": "configure",
+		    "name": "debug"
+		},
+		{
+		    "type": "build",
+		    "name": "debug"
+		}
+	    ]
+	},
+	{
+	    "name": "release",
+	    "steps": [
+		{
+		    "type": "configure",
+		    "name": "release"
+		},
+		{
+		    "type": "build",
+		    "name": "release"
+		}
+	    ]
+	}
+    ]
+}

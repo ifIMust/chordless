@@ -14,7 +14,7 @@ The initial project goals are partially completed.
 
 ## Compiling
 Requirements (with example Debian/Ubuntu package names):
-- CMake 3.12+ (cmake)
+- CMake 3.25+ (cmake)
 - Qt 6.3 dev files (qt6-base-dev)
 - OpenGL dev files required by Qt6 (libgl1-mesa-dev)
 - ALSA dev files (libasound2-dev)
@@ -34,6 +34,7 @@ The output binary in the build directory is called `chordless`.
 ## Usage
 Run `chordless` with no arguments. An ALSA port is opened.
 Use an ALSA utility such as `aconnectgui` to connect your MIDI instrument to chordless.
+chordless listens to all MIDI channels.
 
 ![chordless and aconnectgui](/screenshot.png?raw=true "Screenshot")
 

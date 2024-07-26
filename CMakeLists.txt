@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.19)
 
 project(chordless VERSION 0.6 LANGUAGES CXX)
 
@@ -29,4 +29,6 @@ add_subdirectory(chord)
 add_subdirectory(note)
 
 qt_add_executable(chordless main.cc)
-target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets note_event note_reader note_state alsa_input full_voicing_observer scientific_note_namer chord_observer chord_matcher_reader chord_matcher_config_factory)
+target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets note_reader note_state alsa_input full_voicing_observer scientific_note_namer chord_observer chord_matcher_reader)
+# Strip symbols from release build:
+target_link_options(chordless PRIVATE $<$<CONFIG:Release>: -s>)
