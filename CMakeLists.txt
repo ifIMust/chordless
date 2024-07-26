@@ -1,17 +1,17 @@
 cmake_minimum_required(VERSION 3.19)
 
-project(chordless VERSION 0.6 LANGUAGES CXX)
+project(chordless VERSION 0.7 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 add_compile_definitions(CHORDLESS_VERSION=${PROJECT_VERSION})
 
-# Download google test every time we build... might not be the best way!
+# Download google test as needed
 include(FetchContent)
 FetchContent_Declare(
   googletest
-  # Specify the commit you depend on and update it regularly.
+  # Specify the specific commit. Update this to use a newer version.
   URL https://github.com/google/googletest/archive/e39786088138f2749d64e9e90e0f9902daa77c40.zip
   DOWNLOAD_EXTRACT_TIMESTAMP true
 )
@@ -29,6 +29,6 @@ add_subdirectory(chord)
 add_subdirectory(note)
 
 qt_add_executable(chordless main.cc)
-target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets note_reader note_state alsa_input full_voicing_observer scientific_note_namer chord_observer chord_matcher_reader)
+target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets boost_program_options note_reader note_state alsa_input full_voicing_observer scientific_note_namer chord_observer chord_matcher_reader)
 # Strip symbols from release build:
 target_link_options(chordless PRIVATE $<$<CONFIG:Release>: -s>)

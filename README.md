@@ -18,30 +18,27 @@ Requirements (with example Debian/Ubuntu package names):
 - Qt 6.3 dev files (qt6-base-dev)
 - OpenGL dev files required by Qt6 (libgl1-mesa-dev)
 - ALSA dev files (libasound2-dev)
-- Boost JSON dev files (libboost-json1.81-dev)
+- Boost program_options and json dev files (libboost-json1.81-dev, libboost-program-options1.81-dev)
 - An internet connection, since gtest 1.15.0 is downloaded from github during the build
 
 Build instructions
 ```
-mkdir build
-cd build
-cmake ..
-cmake --build .
-ctest # optional, run the unit tests
+cmake --workflow --preset release
 ```
-The output binary in the build directory is called `chordless`.
+The output binary is created at `build/release/chordless`.
 
 ## Usage
-Run `chordless` with no arguments. An ALSA port is opened.
+Running `build/release/chordless` from the project root will use the provided `chords.json` config file.
+Use `chordless -c FILE_NAME` to specify a different chord configuration or path.
+An ALSA MIDI input port is opened when the application launches.
 Use an ALSA utility such as `aconnectgui` to connect your MIDI instrument to chordless.
-chordless listens to all MIDI channels.
+Notes are read from all MIDI channels, and all other MIDI traffic is ignored.
 
 ![chordless and aconnectgui](/screenshot.png?raw=true "Screenshot")
 
 ## Desired features
 - Select sharps or flats preference with a UI widget.
 - Toggle numeric subscript visibility with a UI widget.
-- Specify config file as a command line argument
 
 ## Further work
 - Select key/mode, for improved chord naming/analysis
@@ -53,6 +50,4 @@ chordless listens to all MIDI channels.
   - Apply chord detection only to lowest matching pattern.
   - Would match chords to the prevailing harmony (left hand) without being muddled by the melody (right hand).
   - Control this setting with a UI widget
-- Resizable window with font scaling
-- Make unit testing a separate target
-- Consider storing gtest files in the repository, instead of downloading
+

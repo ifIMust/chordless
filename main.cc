@@ -10,8 +10,12 @@
 #include <QFont>
 #include <QLabel>
 
+#include <boost/program_options.hpp>
+
+#include <filesystem>
 #include <iostream>
 #include <memory>
+#include <string>
 #include <utility>
 
 constexpr int window_w = 498;
@@ -27,8 +31,27 @@ constexpr int chord_label_y = full_voice_label_y + full_voice_label_h + 10;
 constexpr int chord_label_w = full_voice_label_w;
 constexpr int chord_label_h = full_voice_label_h;
 
+namespace po = boost::program_options;
+
 int main(int argc, char **argv) {
   std::cout << "chordless v" << CHORDLESS_VERSION << std::endl;
+  
+  po::options_description desc("Usage");
+  desc.add_options()
+    ("config,c", po::value<std::string>()->default_value("chords.json"),
+     "specify location of chords file");
+  
+  po::variables_map vm;
+  try {
+    po::store(po::parse_command_line(argc, argv, desc), vm);
+    po::notify(vm);
+  } catch (...) {
+    std::cerr << desc << std::endl;
+    return 1;
+  }
+  
+  const auto chords_file = std::filesystem::absolute(vm["config"].as<std::string>());
+  std::cout << "Using chord config file: " << chords_file << std::endl;
   
   chordless::alsa::AlsaInput alsa_input;
   if (!alsa_input.IsValid()) {
@@ -70,7 +93,7 @@ int main(int argc, char **argv) {
   QObject::connect(&full_voicing, SIGNAL(textChanged(const QString&)), full_voice_label, SLOT(setText(const QString&)));
 
   chordless::chord::ChordObserver chord_observer(note_state);
-  chordless::chord::configureChordObserver(chord_observer, "../chord/config.json");
+  chordless::chord::configureChordObserver(chord_observer, chords_file);
   note_reader.AddObserver(chord_observer);
   QObject::connect(&chord_observer, SIGNAL(textChanged(const QString&)), chord_label, SLOT(setText(const QString&)));
 
