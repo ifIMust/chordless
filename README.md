@@ -12,20 +12,14 @@ The initial project goals are partially completed.
 - Customize displayed info using GUI controls (NOT done)
 - Conform to the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
 
-### Dependencies
-- Qt 6.3+ for GUI
-- CMake 3.12+ for build
-- gtest 1.15.0 for unit testing (downloaded during build)
-- ALSA for receiving MIDI events
-
 ## Compiling
 Requirements (with example Debian/Ubuntu package names):
-- CMake (cmake)
-- Qt dev files (qt6-base-dev)
+- CMake 3.12+ (cmake)
+- Qt 6.3 dev files (qt6-base-dev)
 - OpenGL dev files required by Qt6 (libgl1-mesa-dev)
 - ALSA dev files (libasound2-dev)
 - Boost JSON dev files (libboost-json1.81-dev)
-- An internet connection, since gtest is downloaded from github during the build
+- An internet connection, since gtest 1.15.0 is downloaded from github during the build
 
 Build instructions
 ```
@@ -46,7 +40,7 @@ Use an ALSA utility such as `aconnectgui` to connect your MIDI instrument to cho
 ## Desired features
 - Select sharps or flats preference with a UI widget.
 - Toggle numeric subscript visibility with a UI widget.
-- Support specifying config file as a command line argument
+- Specify config file as a command line argument
 
 ## Further work
 - Select key/mode, for improved chord naming/analysis

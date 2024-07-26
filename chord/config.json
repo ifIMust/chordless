@@ -42,8 +42,23 @@
 	    ]
 	},
 	{
+	    "name": "Major 6th (Root Position)",
+	    "suffix": "\u2076",
+	    "tonic": 0,
+	    "patterns": [
+		{
+		    "num_notes": 4,
+		    "notes": [0, 4, 7, 9]
+		},
+		{
+		    "num_notes": 3,
+		    "notes": [0, 7, 9]
+		}
+	    ]
+	},
+	{
 	    "name": "Major 7 (Root Position)",
-	    "suffix": "maj7",
+	    "suffix": "maj\u2077",
 	    "tonic": 0,
 	    "patterns": [
 		{
@@ -58,7 +73,7 @@
 	},
 	{
 	    "name": "Major 7 (1st Inversion)",
-	    "suffix": "maj7",
+	    "suffix": "maj\u2077",
 	    "tonic": 8,
 	    "patterns": [
 		{
@@ -69,7 +84,7 @@
 	},
 	{
 	    "name": "Major 7 (2nd Inversion)",
-	    "suffix": "maj7",
+	    "suffix": "maj\u2077",
 	    "tonic": 5,
 	    "patterns": [
 		{
@@ -80,7 +95,7 @@
 	},
 	{
 	    "name": "Major 7 (3rd Inversion)",
-	    "suffix": "maj7",
+	    "suffix": "maj\u2077",
 	    "tonic": 1,
 	    "patterns": [
 		{
@@ -91,7 +106,7 @@
 	},
 	{
 	    "name": "Dominant 7 (Root Position)",
-	    "suffix": "7",
+	    "suffix": "\u2077",
 	    "tonic": 0,
 	    "patterns": [
 		{
@@ -102,7 +117,7 @@
 	},
 	{
 	    "name": "Dominant 7 (1st Inversion)",
-	    "suffix": "7",
+	    "suffix": "\u2077",
 	    "tonic": 8,
 	    "patterns": [
 		{
@@ -117,7 +132,7 @@
 	},
 	{
 	    "name": "Dominant 7 (2nd Inversion)",
-	    "suffix": "7",
+	    "suffix": "\u2077",
 	    "tonic": 5,
 	    "patterns": [
 		{
@@ -132,7 +147,7 @@
 	},
 	{
 	    "name": "Dominant 7 (3rd Inversion)",
-	    "suffix": "7",
+	    "suffix": "\u2077",
 	    "tonic": 2,
 	    "patterns": [
 		{
@@ -184,12 +199,34 @@
 	},
 	{
 	    "name": "Minor 7 (Root Position)",
-	    "suffix": "\u20987",
+	    "suffix": "\u2098\u2077",
 	    "tonic": 0,
 	    "patterns": [
 		{
 		    "num_notes": 4,
 		    "notes": [0, 3, 7, 10]
+		}
+	    ]
+	},
+	{
+	    "name": "Sus4",
+	    "suffix": "sus",
+	    "tonic": 0,
+	    "patterns": [
+		{
+		    "num_notes": 3,
+		    "notes": [0, 5, 7]
+		}
+	    ]
+	},
+	{
+	    "name": "Sus2",
+	    "suffix": "sus2",
+	    "tonic": 0,
+	    "patterns": [
+		{
+		    "num_notes": 3,
+		    "notes": [0, 2, 7]
 		}
 	    ]
 	},
