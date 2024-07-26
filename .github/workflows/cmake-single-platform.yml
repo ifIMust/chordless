@@ -13,6 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Get CMake and Ninja
+      uses: lukka/get-cmake@latest
+
     - name: Install package dependencies
       run: sudo apt-get install -y libgl1-mesa-dev qt6-base-dev libasound2-dev libboost-json1.83-dev
 
