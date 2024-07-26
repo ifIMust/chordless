@@ -19,7 +19,9 @@ namespace chordless::note {
     read_input_.store(true);
 
     while (this->read_input_.load()) {
-      // Non-blocking read, so the app can shut down cleanly.
+      // There doesn't seem to be a way to break the ALSA sequencer out
+      // of a block read operation.
+      // Thus, use a non-blocking read, so the app can shut down cleanly.
       // Sleep if we haven't seen note action, to keep CPU usage down.
       auto event = this->note_input_.Read();
       if (event.type_ == NoteEventType::NONE) {
