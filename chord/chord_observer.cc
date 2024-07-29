@@ -52,7 +52,8 @@ namespace chordless::chord {
 	ss << c.name << " ";
       }
     }
-    emit textChanged(QString(ss.str().c_str()));
+    text_ = ss.str().c_str();
+    emit textChanged();
   }
 
   void ChordObserver::AddMatcher(std::unique_ptr<ChordMatcher> &&matcher) {

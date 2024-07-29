@@ -33,5 +33,6 @@ TEST_F(NoteNameTest, NameLowASh) {
 }
 
 TEST_F(NoteNameTest, NameLowBFl) {
+  namer.SetSharp(false);
   ASSERT_EQ(std::string("B♭"), namer.Name(0x2e, false));
 }

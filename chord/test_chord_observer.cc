@@ -13,7 +13,7 @@ class ChordObserverTest : public testing::Test {
 public:
   ChordObserverTest() :
     observer(note_state),
-    spy(&observer, SIGNAL(textChanged(const QString&)))
+    spy(&observer, SIGNAL(textChanged()))
   {}
 
 protected:
@@ -27,8 +27,7 @@ protected:
 TEST_F(ChordObserverTest, ObserveNothing) {
   observer.OnNoteChange();
   ASSERT_EQ(1, spy.count());
-  QList<QVariant> arguments = spy.takeFirst();
-  EXPECT_EQ(0, arguments.at(0).toString().size());
+  EXPECT_EQ(0, observer.text().size());
 }
 
 TEST_F(ChordObserverTest, ObserveMajorWithNoMatchers) {
@@ -37,8 +36,7 @@ TEST_F(ChordObserverTest, ObserveMajorWithNoMatchers) {
   note_state.NoteOn(7);
   observer.OnNoteChange();
   ASSERT_EQ(1, spy.count());
-  QList<QVariant> arguments = spy.takeFirst();
-  EXPECT_EQ(0, arguments.at(0).toString().size());
+  EXPECT_EQ(0, observer.text().size());
 }
 
 TEST_F(ChordObserverTest, ObserveMajorWithNullMatcher) {
@@ -51,8 +49,7 @@ TEST_F(ChordObserverTest, ObserveMajorWithNullMatcher) {
   observer.OnNoteChange();
 
   ASSERT_EQ(1, spy.count());
-  QList<QVariant> arguments = spy.takeFirst();
-  EXPECT_EQ(0, arguments.at(0).toString().size());
+  EXPECT_EQ(0, observer.text().size());
 }
 
 TEST_F(ChordObserverTest, ObserveMajorWithMajorMatcher) {
@@ -67,8 +64,7 @@ TEST_F(ChordObserverTest, ObserveMajorWithMajorMatcher) {
 
   const QString expected("C ");
   ASSERT_EQ(1, spy.count());
-  QList<QVariant> arguments = spy.takeFirst();
-  EXPECT_EQ(expected, arguments.at(0).toString());
+  EXPECT_EQ(expected, observer.text());
 }
 
 TEST_F(ChordObserverTest, ObserveMinorWithMinorMatcher) {
@@ -83,8 +79,7 @@ TEST_F(ChordObserverTest, ObserveMinorWithMinorMatcher) {
 
   const QString expected("C\u2098 ");
   ASSERT_EQ(1, spy.count());
-  QList<QVariant> arguments = spy.takeFirst();
-  EXPECT_EQ(expected, arguments.at(0).toString());
+  EXPECT_EQ(expected, observer.text());
 }
 
 TEST_F(ChordObserverTest, ObserveMinorWithMinorMatcherExtraC) {
@@ -100,8 +95,7 @@ TEST_F(ChordObserverTest, ObserveMinorWithMinorMatcherExtraC) {
 
   const QString expected("C\u2098 ");
   ASSERT_EQ(1, spy.count());
-  QList<QVariant> arguments = spy.takeFirst();
-  EXPECT_EQ(expected, arguments.at(0).toString());
+  EXPECT_EQ(expected, observer.text());
 }
 
 TEST_F(ChordObserverTest, UniqueNotesCMajTriad) {
