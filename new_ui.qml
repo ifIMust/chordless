@@ -4,10 +4,12 @@ import QtQml.Models
 
 import com.chordless.chord_observer 1.0
 import com.chordless.note_observer 1.0
+import com.chordless.settings 1.0
 
     Rectangle {
     	required property ChordObserver chord_obs
    	required property NoteObserver note_obs
+	required property Settings settings
 
         id: rectangle
         width: 500
@@ -26,8 +28,8 @@ import com.chordless.note_observer 1.0
                 height: 54
 
                 ComboBox {
-		    objectName: "sharpsComboBox"
                     id: sharpsComboBox
+
 		    height: 32
                     width: 48
                     font.pointSize: 16
@@ -37,16 +39,13 @@ import com.chordless.note_observer 1.0
                     ToolTip.timeout: 4000
                     ToolTip.visible: hovered
                     ToolTip.text: qsTr("Prefer sharps or flats")
-                    model: ListModel {
-                        id: sharpsComboListModel
 
-                        ListElement {
-                            name: "♯"
-                        }
-                        ListElement {
-                            name: "♭"
-                        }
-                    }
+		    textRole: "text"
+		    valueRole: "value"
+		    currentIndex: settings.sharp_combo_index
+		    onActivated: settings.sharp_combo_index = currentIndex
+		    Component.onCompleted: currentIndex = indexOfValue(settings.sharp_combo_index)
+		    model: [{value: 0, text: qsTr("♯")}, {value: 1, text: qsTr("♭")}]
                 }
 
                 CheckBox {

@@ -82,9 +82,11 @@ int main(int argc, char **argv) {
   QQuickView view;
   qmlRegisterType<chordless::note::FullVoicingObserver>("com.chordless.note_observer", 1, 0, "NoteObserver");
   qmlRegisterType<chordless::chord::ChordObserver>("com.chordless.chord_observer", 1, 0, "ChordObserver");
+  qmlRegisterType<chordless::settings::Settings>("com.chordless.settings", 1, 0, "Settings");
   view.setInitialProperties({
       {"note_obs", QVariant::fromValue(&full_voicing)},
-      {"chord_obs", QVariant::fromValue(&chord_observer)}});
+      {"chord_obs", QVariant::fromValue(&chord_observer)},
+      {"settings", QVariant::fromValue(&settings)}});
   view.setSource(QUrl::fromLocalFile("new_ui.qml"));
   view.show();
   auto root_object = view.rootObject();
