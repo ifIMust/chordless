@@ -8,21 +8,15 @@ namespace chordless::settings {
   void Settings::ConnectToGui(QQuickItem &) {
   }
 
-  int Settings::SharpComboIndex() const noexcept {
-    std::cout << "SharpComboIndex\n";
-    return sharp_combo_index_;
+  bool Settings::sharp() const noexcept {
+    std::cout << "sharp\n";
+    return sharp_;
   }
 
-  void Settings::SetSharpComboIndex(int idx) noexcept {
-    std::cout << "SetSharpComboIndex\n";
-    sharp_combo_index_ = idx;
-    sharp_ = (idx == 0);
-    emit SharpComboIndexChanged();
-    emit SharpSettingChanged(sharp_);
-  }
-  
-  void Settings::SetSharp(int index) {
-    sharp_ = (index == 0);
+  void Settings::setSharp(bool sharp) noexcept {
+    std::cout << "setSharp\n";
+    sharp_ = sharp;
+    emit sharpChanged();
     emit SharpSettingChanged(sharp_);
   }
 }

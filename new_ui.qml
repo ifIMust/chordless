@@ -39,13 +39,12 @@ import com.chordless.settings 1.0
                     ToolTip.timeout: 4000
                     ToolTip.visible: hovered
                     ToolTip.text: qsTr("Prefer sharps or flats")
-
+		    currentIndex: indexOfValue(qsTr("♯"))
 		    textRole: "text"
 		    valueRole: "value"
-		    currentIndex: settings.sharp_combo_index
-		    onActivated: settings.sharp_combo_index = currentIndex
-		    Component.onCompleted: currentIndex = indexOfValue(settings.sharp_combo_index)
-		    model: [{value: 0, text: qsTr("♯")}, {value: 1, text: qsTr("♭")}]
+		    onActivated: settings.sharp = currentValue
+		    Component.onCompleted: currentIndex = indexOfValue(settings.sharp)
+		    model: [{value: true, text: qsTr("♯")}, {value: false, text: qsTr("♭")}]
                 }
 
                 CheckBox {
