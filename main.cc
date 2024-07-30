@@ -13,9 +13,6 @@
 #include <QQuickItem>
 #include <QQuickView>
 
-#include <boost/program_options.hpp>
-
-#include <filesystem>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -34,30 +31,9 @@ constexpr int chord_label_y = full_voice_label_y + full_voice_label_h + 10;
 constexpr int chord_label_w = full_voice_label_w;
 constexpr int chord_label_h = full_voice_label_h;
 
-namespace po = boost::program_options;
-
 int main(int argc, char **argv) {
   std::cout << "chordless v" << CHORDLESS_VERSION << std::endl;
 
-  chordless::settings::Settings settings;
-  
-  po::options_description desc("Usage");
-  desc.add_options()
-    ("config,c", po::value<std::string>()->default_value("chords.json"),
-     "specify location of chords file");
-  
-  po::variables_map vm;
-  try {
-    po::store(po::parse_command_line(argc, argv, desc), vm);
-    po::notify(vm);
-  } catch (...) {
-    std::cerr << desc << std::endl;
-    return 1;
-  }
-  
-  const auto chords_file = std::filesystem::absolute(vm["config"].as<std::string>());
-  std::cout << "Using chord config file: " << chords_file << std::endl;
-  
   chordless::alsa::AlsaInput alsa_input;
   if (!alsa_input.IsValid()) {
     std::cerr << "Failed to open ALSA sequencer/port" << std::endl;
@@ -67,19 +43,26 @@ int main(int argc, char **argv) {
   QApplication app(argc, argv);
   chordless::note::NoteState note_state;
   chordless::note::NoteReader note_reader(alsa_input, note_state);
-
+  chordless::settings::Settings settings;
+  
   chordless::note::FullVoicingObserver full_voicing(note_state);
   full_voicing.SetNoteNamer(std::make_unique<chordless::note::ScientificNoteNamer>());
   note_reader.AddObserver(full_voicing);
   QObject::connect(&settings, SIGNAL(sharpChanged(bool)), &full_voicing, SLOT(SetSharp(bool)));
   
   chordless::chord::ChordObserver chord_observer(note_state);
-  chordless::chord::configureChordObserver(chord_observer, chords_file);
   note_reader.AddObserver(chord_observer);
   QObject::connect(&settings, SIGNAL(sharpChanged(bool)), &chord_observer, SLOT(SetSharp(bool)));
   
+  int config_result = settings.ReadConfiguration(argc, argv);
+  if (config_result != 0) {
+    return config_result;
+  }
+
+  chordless::chord::configureChordObserver(chord_observer, settings.ChordsFile());
+
   note_reader.start();
-  
+    
   QQuickView view;
   qmlRegisterType<chordless::note::FullVoicingObserver>("com.chordless.note_observer", 1, 0, "NoteObserver");
   qmlRegisterType<chordless::chord::ChordObserver>("com.chordless.chord_observer", 1, 0, "ChordObserver");
@@ -88,7 +71,7 @@ int main(int argc, char **argv) {
       {"note_obs", QVariant::fromValue(&full_voicing)},
       {"chord_obs", QVariant::fromValue(&chord_observer)},
       {"settings", QVariant::fromValue(&settings)}});
-  view.setSource(QUrl::fromLocalFile("new_ui.qml"));
+  view.setSource(QUrl::fromLocalFile("ui.qml"));
   view.show();
   
   return app.exec();

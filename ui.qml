@@ -25,11 +25,10 @@ Rectangle {
         Row {
             id: row
             width: 584
-            height: 54
+            height: 48
 
             ComboBox {
                 id: sharpsComboBox
-
 		height: 32
                 width: 48
                 font.pointSize: 16
@@ -39,7 +38,6 @@ Rectangle {
                 ToolTip.timeout: 4000
                 ToolTip.visible: hovered
                 ToolTip.text: qsTr("Prefer sharps or flats")
-		currentIndex: indexOfValue(qsTr("♯"))
 		textRole: "text"
 		valueRole: "value"
 		onActivated: settings.sharp = currentValue
@@ -48,8 +46,8 @@ Rectangle {
             }
 
             CheckBox {
-		objectName: "octaveCheckBox"
                 id: octaveCheckBox
+		visible: false
                 text: qsTr("Show Octave")
                 checked: true
                 hoverEnabled: true
