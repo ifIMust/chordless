@@ -1,6 +1,4 @@
 add_library(chord_matcher chord_matcher.cc chord_matcher.h chord_matcher_config.h)
-set_property(TARGET chord_matcher PROPERTY POSITION_INDEPENDENT_CODE ON)
-target_link_libraries(chord_matcher INTERFACE basic_note_namer)
 
 add_executable(test_chord_matcher test_chord_matcher.cc)
 target_link_libraries(test_chord_matcher gtest_main chord_matcher chord_matcher_config_factory note_state)
@@ -16,7 +14,7 @@ add_library(chord_matcher_reader chord_matcher_reader.cc chord_matcher_reader.h)
 target_link_libraries(chord_matcher_reader PRIVATE Qt6::Core boost_json chord_matcher)
 
 qt_add_qml_module(chord_observer URI com.chordless.chord_observer VERSION 1.0 SOURCES chord_observer.cc chord_observer.h)
-target_link_libraries(chord_observer PRIVATE Qt6::Core INTERFACE chord_matcher note_observer)
+target_link_libraries(chord_observer PRIVATE Qt6::Core INTERFACE chord_matcher note_observer basic_note_namer)
 
 add_executable(test_chord_observer test_chord_observer.cc)
 target_link_libraries(test_chord_observer PRIVATE Qt6::Core Qt6::Test gtest_main chord_observer note_state chord_matcher chord_matcher_config_factory)

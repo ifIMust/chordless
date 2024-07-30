@@ -4,7 +4,7 @@
 
 namespace chordless::chord {
   struct Chord {
-    std::string name;
-    
+    unsigned char tonic_note{0};
+    std::string suffix;
   };
 }

@@ -3,6 +3,7 @@
 #include "../note/note_observer.h"
 
 #include "chord_matcher.h"
+#include "../note/note_namer.h"
 
 #include <QtQml/qqmlregistration.h>
 #include <QString>
@@ -26,7 +27,7 @@ namespace chordless {
       explicit ChordObserver(::chordless::note::NoteState &note_state);
     
       void OnNoteChange() noexcept override;
-      void SetSharp(bool) noexcept override { /* TODO */ }
+      void SetSharp(bool) noexcept override;
       
       void AddMatcher(std::unique_ptr<ChordMatcher> &&matcher);
 
@@ -43,7 +44,7 @@ namespace chordless {
     private:
       std::vector<std::unique_ptr<ChordMatcher>> matchers_;
       const ::chordless::note::NoteState &note_state_;
-
+      std::unique_ptr<note::NoteNamer> note_namer_;
       QString text_;
     };
   }
