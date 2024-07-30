@@ -15,7 +15,7 @@ The initial project goals are partially completed.
 ## Compiling
 Requirements (with example Debian/Ubuntu package names):
 - CMake 3.25+ (cmake)
-- Qt 6.3 dev files (qt6-base-dev)
+- Qt 6.3 dev files (qt6-base-dev, qt6-declarative-dev)
 - OpenGL dev files required by Qt6 (libgl1-mesa-dev)
 - ALSA dev files (libasound2-dev)
 - Boost program_options and json dev files (libboost-json1.81-dev, libboost-program-options1.81-dev)
