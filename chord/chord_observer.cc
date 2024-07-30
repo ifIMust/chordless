@@ -1,5 +1,6 @@
 #include "chord_observer.h"
 
+#include "../note/basic_note_namer.h"
 #include "../note/note_constant.h"
 #include "../note/note_state.h"
 
@@ -8,6 +9,11 @@
 
 namespace chordless::chord {
   using NoteSet = std::bitset<::chordless::note::kNumNotes>;
+
+  ChordObserver::ChordObserver(::chordless::note::NoteState &note_state) :
+    note_state_(note_state),
+    note_namer_(std::make_unique<chordless::note::BasicNoteNamer>())
+  {}
 
   NoteSet ChordObserver::UniqueNotes(const NoteSet &n) {
     constexpr auto unique_mask = 0x0fff;
@@ -22,9 +28,6 @@ namespace chordless::chord {
     return unique_notes;
   }
 
-  ChordObserver::ChordObserver(::chordless::note::NoteState &note_state) :
-    note_state_(note_state)
-  {}
 
   void ChordObserver::OnNoteChange() noexcept {
     std::ostringstream ss;
@@ -49,10 +52,15 @@ namespace chordless::chord {
       }
 
       for (auto c : all_chords) {
-	ss << c.name << " ";
+	ss << note_namer_->Name(c.tonic_note) << c.suffix << " ";
       }
     }
-    emit textChanged(QString(ss.str().c_str()));
+    text_ = ss.str().c_str();
+    emit textChanged();
+  }
+
+  void ChordObserver::SetSharp(bool sharp) noexcept {
+    note_namer_->SetSharp(sharp);
   }
 
   void ChordObserver::AddMatcher(std::unique_ptr<ChordMatcher> &&matcher) {

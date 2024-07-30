@@ -4,7 +4,6 @@
 
 #include "chord_matcher_config.h"
 #include "../note/note_constant.h"
-#include "../note/note_namer.h"
 
 #include <memory>
 #include <vector>
@@ -26,7 +25,6 @@ namespace chordless {
       
     private:
       std::unique_ptr<ChordMatcherConfig> config_;
-      std::unique_ptr<note::NoteNamer> note_namer_;
     };
   }
 }

@@ -5,14 +5,14 @@
 #include "note/note_state.h"
 #include "note/note_reader.h"
 #include "note/scientific_note_namer.h"
+#include "settings/settings.h"
 
 #include <QApplication>
 #include <QFont>
 #include <QLabel>
+#include <QQuickItem>
+#include <QQuickView>
 
-#include <boost/program_options.hpp>
-
-#include <filesystem>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -31,28 +31,9 @@ constexpr int chord_label_y = full_voice_label_y + full_voice_label_h + 10;
 constexpr int chord_label_w = full_voice_label_w;
 constexpr int chord_label_h = full_voice_label_h;
 
-namespace po = boost::program_options;
-
 int main(int argc, char **argv) {
   std::cout << "chordless v" << CHORDLESS_VERSION << std::endl;
-  
-  po::options_description desc("Usage");
-  desc.add_options()
-    ("config,c", po::value<std::string>()->default_value("chords.json"),
-     "specify location of chords file");
-  
-  po::variables_map vm;
-  try {
-    po::store(po::parse_command_line(argc, argv, desc), vm);
-    po::notify(vm);
-  } catch (...) {
-    std::cerr << desc << std::endl;
-    return 1;
-  }
-  
-  const auto chords_file = std::filesystem::absolute(vm["config"].as<std::string>());
-  std::cout << "Using chord config file: " << chords_file << std::endl;
-  
+
   chordless::alsa::AlsaInput alsa_input;
   if (!alsa_input.IsValid()) {
     std::cerr << "Failed to open ALSA sequencer/port" << std::endl;
@@ -60,45 +41,36 @@ int main(int argc, char **argv) {
   }
 
   QApplication app(argc, argv);
-  QWidget window;
-  window.setFixedSize(window_w, window_h);
-  QFont mini_font("Helvetica", 10);
-
-  auto all_notes_label = new QLabel(&window);
-  all_notes_label->setGeometry(0, 0, full_voice_label_w, 10);
-  all_notes_label->setFont(mini_font);
-  all_notes_label->setText("All Notes");
-
-  auto chords_label = new QLabel(&window);
-  chords_label->setGeometry(0, chord_label_y - 10, chord_label_w, 10);
-  chords_label->setFont(mini_font);
-  chords_label->setText("Chords");
-  
-  QFont font("Helvetica", 24);
-  auto full_voice_label = new QLabel(&window);
-  full_voice_label->setGeometry(full_voice_label_x, full_voice_label_y, full_voice_label_w, full_voice_label_h);
-  full_voice_label->setFont(font);
-  full_voice_label->setText("Play to begin");
-
-  auto chord_label = new QLabel(&window);
-  chord_label->setGeometry(chord_label_x, chord_label_y, chord_label_w, chord_label_h);
-  chord_label->setFont(font);
-
   chordless::note::NoteState note_state;
   chordless::note::NoteReader note_reader(alsa_input, note_state);
-
+  chordless::settings::Settings settings;
+  
   chordless::note::FullVoicingObserver full_voicing(note_state);
   full_voicing.SetNoteNamer(std::make_unique<chordless::note::ScientificNoteNamer>());
   note_reader.AddObserver(full_voicing);
-  QObject::connect(&full_voicing, SIGNAL(textChanged(const QString&)), full_voice_label, SLOT(setText(const QString&)));
-
+  
   chordless::chord::ChordObserver chord_observer(note_state);
-  chordless::chord::configureChordObserver(chord_observer, chords_file);
   note_reader.AddObserver(chord_observer);
-  QObject::connect(&chord_observer, SIGNAL(textChanged(const QString&)), chord_label, SLOT(setText(const QString&)));
+  
+  int config_result = settings.ReadConfiguration(argc, argv);
+  if (config_result != 0) {
+    return config_result;
+  }
+
+  chordless::chord::configureChordObserver(chord_observer, settings.ChordsFile());
 
   note_reader.start();
+    
+  QQuickView view;
+  qmlRegisterType<chordless::note::FullVoicingObserver>("com.chordless.note_observer", 1, 0, "NoteObserver");
+  qmlRegisterType<chordless::chord::ChordObserver>("com.chordless.chord_observer", 1, 0, "ChordObserver");
+  qmlRegisterType<chordless::settings::Settings>("com.chordless.settings", 1, 0, "Settings");
+  view.setInitialProperties({
+      {"note_obs", QVariant::fromValue(&full_voicing)},
+      {"chord_obs", QVariant::fromValue(&chord_observer)},
+      {"settings", QVariant::fromValue(&settings)}});
+  view.setSource(QUrl::fromLocalFile("ui.qml"));
+  view.show();
   
-  window.show();
   return app.exec();
 }

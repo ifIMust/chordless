@@ -10,6 +10,7 @@ namespace chordless::note {
   class ScientificNoteNamer : public NoteNamer {
   public:
     std::string Name(unsigned char note, bool sharp) noexcept override;
+    void SetSharp(bool) noexcept override;
 
   private:
     BasicNoteNamer base_namer_;

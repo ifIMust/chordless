@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 
-project(chordless VERSION 0.7 LANGUAGES CXX)
+project(chordless VERSION 0.8 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -22,13 +22,14 @@ FetchContent_MakeAvailable(googletest)
 include(CTest)
 enable_testing()
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Test Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Test Quick Widgets)
 qt_standard_project_setup()
 add_subdirectory(input)
-add_subdirectory(chord)
 add_subdirectory(note)
+add_subdirectory(chord)
+add_subdirectory(settings)
 
 qt_add_executable(chordless main.cc)
-target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets boost_program_options note_reader note_state alsa_input full_voicing_observer scientific_note_namer chord_observer chord_matcher_reader)
+target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets Qt6::Quick note_reader note_state alsa_input full_voicing_observer scientific_note_namer chord_observer chord_matcher_reader settings)
 # Strip symbols from release build:
 target_link_options(chordless PRIVATE $<$<CONFIG:Release>: -s>)

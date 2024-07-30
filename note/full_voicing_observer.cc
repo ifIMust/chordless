@@ -1,6 +1,7 @@
 #include "full_voicing_observer.h"
 
 #include "basic_note_namer.h"
+#include "scientific_note_namer.h"
 #include "note_state.h"
 
 #include <sstream>
@@ -20,10 +21,15 @@ namespace chordless::note {
     for (auto n : notes) {
       ss << note_namer_->Name(n, true) << " ";
     }
-    emit textChanged(QString(ss.str().c_str()));
+    text_ = QString(ss.str().c_str());
+    emit textChanged();
   }
 
   void FullVoicingObserver::SetNoteNamer(std::unique_ptr<NoteNamer> &&n) noexcept {
     note_namer_ = std::move(n);
+  }
+
+  void FullVoicingObserver::SetSharp(bool sharp) noexcept {
+    note_namer_->SetSharp(sharp);
   }
 }

@@ -41,7 +41,7 @@ TEST_F(MajorTriadTest, CMajorTriadMatchRooted) {
   auto notes = ns.GetBits();
   auto chords = cm.MatchRooted(notes, 0, notes.count());
   ASSERT_FALSE(chords.empty());
-  EXPECT_EQ(chords[0].name, "C");
+  EXPECT_EQ(chords[0].tonic_note, 0);
 }
 
 TEST_F(MajorTriadTest, DMajorTriadMatchRooted) {
@@ -52,7 +52,7 @@ TEST_F(MajorTriadTest, DMajorTriadMatchRooted) {
   notes >>= 2;
   auto chords = cm.MatchRooted(notes, 2, notes.count());
   ASSERT_FALSE(chords.empty());
-  EXPECT_EQ(chords[0].name, "D");
+  EXPECT_EQ(chords[0].tonic_note, 2);
 }
 
 TEST_F(MajorTriadTest, CMajorTriadExtraNoteMatchRooted) {

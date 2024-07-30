@@ -43,4 +43,8 @@ namespace chordless::note {
     }
     return name;
   }
+
+  void ScientificNoteNamer::SetSharp(bool sharp) noexcept {
+    base_namer_.SetSharp(sharp);
+  }
 }
