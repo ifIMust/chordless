@@ -48,11 +48,9 @@ int main(int argc, char **argv) {
   chordless::note::FullVoicingObserver full_voicing(note_state);
   full_voicing.SetNoteNamer(std::make_unique<chordless::note::ScientificNoteNamer>());
   note_reader.AddObserver(full_voicing);
-  QObject::connect(&settings, SIGNAL(sharpChanged(bool)), &full_voicing, SLOT(SetSharp(bool)));
   
   chordless::chord::ChordObserver chord_observer(note_state);
   note_reader.AddObserver(chord_observer);
-  QObject::connect(&settings, SIGNAL(sharpChanged(bool)), &chord_observer, SLOT(SetSharp(bool)));
   
   int config_result = settings.ReadConfiguration(argc, argv);
   if (config_result != 0) {

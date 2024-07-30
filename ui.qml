@@ -40,7 +40,11 @@ Rectangle {
                 ToolTip.text: qsTr("Prefer sharps or flats")
 		textRole: "text"
 		valueRole: "value"
-		onActivated: settings.sharp = currentValue
+		onActivated: {
+		    settings.sharp = currentValue;
+		    note_obs.SetSharp(currentValue);
+		    chord_obs.SetSharp(currentValue);
+		}
 		Component.onCompleted: currentIndex = indexOfValue(settings.sharp)
 		model: [{value: true, text: qsTr("♯")}, {value: false, text: qsTr("♭")}]
             }

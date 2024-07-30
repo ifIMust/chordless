@@ -22,7 +22,7 @@ namespace chordless {
       explicit FullVoicingObserver(const NoteState&);
 
       void OnNoteChange() noexcept override;
-      void SetSharp(bool) noexcept override;
+      Q_INVOKABLE void SetSharp(bool) noexcept;
 
       void SetNoteNamer(std::unique_ptr<NoteNamer>&&) noexcept;
 

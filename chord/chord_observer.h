@@ -27,7 +27,7 @@ namespace chordless {
       explicit ChordObserver(::chordless::note::NoteState &note_state);
     
       void OnNoteChange() noexcept override;
-      void SetSharp(bool) noexcept override;
+      Q_INVOKABLE void SetSharp(bool) noexcept;
       
       void AddMatcher(std::unique_ptr<ChordMatcher> &&matcher);
 
@@ -37,9 +37,6 @@ namespace chordless {
       
       ChordObserver(const ChordObserver&) = delete;
       ChordObserver& operator=(const ChordObserver&) = delete;
-
-    // signals:
-    //   void TextChanged();
     
     private:
       std::vector<std::unique_ptr<ChordMatcher>> matchers_;

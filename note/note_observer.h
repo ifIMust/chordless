@@ -11,7 +11,6 @@ namespace chordless::note {
 
   public slots:
     virtual void OnNoteChange() noexcept = 0;
-    virtual void SetSharp(bool) noexcept = 0;
     
   signals:
       void textChanged();
