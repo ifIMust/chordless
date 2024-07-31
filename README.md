@@ -28,26 +28,29 @@ cmake --workflow --preset release
 The output binary is created at `build/release/chordless`.
 
 ## Usage
+In addition to compile dependencies, `qml6-module-qtquick-templates` is used at runtime.
+
 Running `build/release/chordless` from the project root will use the provided `chords.json` config file.
 Use `chordless -c FILE_NAME` to specify a different chord configuration or path.
+
 An ALSA MIDI input port is opened when the application launches.
 Use an ALSA utility such as `aconnectgui` to connect your MIDI instrument to chordless.
 Notes are read from all MIDI channels, and all other MIDI traffic is ignored.
 
 ![chordless and aconnectgui](/screenshot.png?raw=true "Screenshot")
 
-## Desired features
-- Select sharps or flats preference with a UI widget.
+## Planned steps
+- Deploy a package that includes most/all dependencies.
+  - Create a .deb package.
 - Toggle numeric subscript visibility with a UI widget.
+- Use a config file for general progam settings.
 
 ## Further work
-- Select key/mode, for improved chord naming/analysis
+- Select key/mode, for improved chord naming/analysis.
 - JACK MIDI input
-- Sustain pedal
-  - Keep notes on to correspond to sustain pedal "dampers lifted"
-  - Control this setting with a UI widget
+- Sustain checkbox: Keep notes on, respecting sustain pedal.
 - Bass chords only
   - Apply chord detection only to lowest matching pattern.
   - Would match chords to the prevailing harmony (left hand) without being muddled by the melody (right hand).
-  - Control this setting with a UI widget
+  - Control this setting with a UI widget.
 
