@@ -1,1 +1,2 @@
 - Always build the project using the cmake workflow for that build. Don't invoke make directly.
+- After making a set of changes, test the build to make sure it compiles. You may run the cmake workflow build command without waiting for confirmation.
