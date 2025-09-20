@@ -15,24 +15,24 @@ The initial project goals are partially completed.
 ## Compiling
 Requirements:
 - CMake 3.25+
-  - Debian/Ubuntu: `cmake`
-  - Fedora: `cmake`
 - Ninja build system
-  - Debian/Ubuntu: `ninja-build`
-  - Fedora: `ninja-build`
 - Qt 6.3 dev files
-  - Debian/Ubuntu: `qt6-base-dev`, `qt6-declarative-dev`
-  - Fedora: `qt6-qtbase-devel`, `qt6-qtdeclarative-devel`
 - OpenGL dev files required by Qt6
-  - Debian/Ubuntu: `libgl1-mesa-dev`
-  - Fedora: `mesa-libGL-devel`
 - ALSA dev files
-  - Debian/Ubuntu: `libasound2-dev`
-  - Fedora: `alsa-lib-devel`
 - Boost program_options and json dev files
-  - Debian/Ubuntu: `libboost-json1.81-dev`, `libboost-program-options1.81-dev`
-  - Fedora: `boost-devel`
 - An internet connection, since gtest 1.15.0 is downloaded from github during the build
+
+### Install Dependencies
+
+**Debian/Ubuntu:**
+```bash
+sudo apt install -y cmake ninja-build qt6-base-dev qt6-declarative-dev libgl1-mesa-dev libasound2-dev libboost-json1.81-dev libboost-program-options1.81-dev
+```
+
+**Fedora:**
+```bash
+sudo dnf install -y cmake ninja-build qt6-qtbase-devel qt6-qtdeclarative-devel mesa-libGL-devel alsa-lib-devel boost-devel
+```
 
 Build instructions
 ```
