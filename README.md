@@ -50,6 +50,41 @@ An ALSA MIDI input port is opened when the application launches.
 Use an ALSA utility such as `aconnectgui` to connect your MIDI instrument to chordless.
 Notes are read from all MIDI channels, and all other MIDI traffic is ignored.
 
+### Testing with notespew
+For testing without a physical MIDI device, the project includes `notespew`, a utility that generates random MIDI notes.
+
+**Requirements for testing:**
+```bash
+# Install ALSA utilities (for aconnect)
+# Debian/Ubuntu:
+sudo apt install alsa-utils
+# Fedora:
+sudo dnf install alsa-utils
+```
+
+**Run test session:**
+
+First build both projects:
+```bash
+# Build chordless
+cmake --workflow --preset release
+
+# Build notespew
+cd notespew
+cmake -B build -S . && cmake --build build
+```
+
+Then run the test session:
+```bash
+./spew-notes.sh
+```
+
+This script will:
+1. Start both chordless and notespew
+2. Automatically connect the MIDI output from notespew to chordless input
+3. Display random chord progressions as notespew generates notes every second
+4. Clean up both processes when you press Ctrl+C
+
 ![chordless and aconnectgui](/screenshot.png?raw=true "Screenshot")
 
 ## Planned steps

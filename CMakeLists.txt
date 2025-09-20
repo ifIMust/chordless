@@ -9,7 +9,7 @@ add_compile_definitions(CHORDLESS_VERSION=${PROJECT_VERSION})
 
 # Configure static linking for standalone deployment
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+    # Only link libgcc and libstdc++ statically, not system libraries like OpenGL
     set(BUILD_SHARED_LIBS OFF)
     set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 endif()
@@ -43,6 +43,7 @@ add_subdirectory(chord)
 add_subdirectory(settings)
 
 qt_add_executable(chordless main.cc)
+
 
 # Add QML files as resources
 qt_add_resources(chordless "qml"
