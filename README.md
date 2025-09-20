@@ -31,7 +31,7 @@ sudo apt install -y cmake ninja-build qt6-base-dev qt6-declarative-dev libgl1-me
 
 **Fedora:**
 ```bash
-sudo dnf install -y cmake ninja-build qt6-qtbase-devel qt6-qtdeclarative-devel mesa-libGL-devel alsa-lib-devel boost-devel
+sudo dnf install -y cmake ninja-build qt6-qtbase-devel qt6-qtdeclarative-devel mesa-libGL-devel alsa-lib-devel boost-devel libstdc++-static
 ```
 
 Build instructions

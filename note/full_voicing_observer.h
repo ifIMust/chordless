@@ -16,6 +16,7 @@ namespace chordless {
     class FullVoicingObserver : public NoteObserver {
       Q_OBJECT
       QML_ELEMENT
+      QML_UNCREATABLE("FullVoicingObserver must be created in C++")
       Q_PROPERTY(QString text READ text NOTIFY textChanged)
 
     public:

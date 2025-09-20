@@ -8,7 +8,7 @@ import com.chordless.settings 1.0
 
 Rectangle {
     required property ChordObserver chord_obs
-    required property NoteObserver note_obs
+    required property FullVoicingObserver note_obs
     required property Settings settings
 
     id: rectangle

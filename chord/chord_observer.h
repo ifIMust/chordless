@@ -21,6 +21,7 @@ namespace chordless {
     {
       Q_OBJECT
       QML_ELEMENT
+      QML_UNCREATABLE("ChordObserver must be created in C++")
       Q_PROPERTY(QString text READ text NOTIFY textChanged)
 
     public:

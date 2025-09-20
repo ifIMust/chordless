@@ -4,7 +4,13 @@ add_executable(test_basic_note_namer test_basic_note_namer.cc)
 target_link_libraries(test_basic_note_namer gtest_main basic_note_namer)
 add_test(NAME basic_note_namer_test COMMAND test_basic_note_namer)
 
-qt_add_qml_module(full_voicing_observer URI com.chordless.note_observer VERSION 1.0 SOURCES full_voicing_observer.cc full_voicing_observer.h)
+qt_add_qml_module(full_voicing_observer
+    URI com.chordless.note_observer
+    VERSION 1.0
+    OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/com/chordless/note_observer
+    RESOURCE_PREFIX /qt/qml
+    SOURCES full_voicing_observer.cc full_voicing_observer.h note_observer.cc note_observer.h
+)
 target_link_libraries(full_voicing_observer PRIVATE Qt6::Core basic_note_namer note_observer)
 
 add_executable(test_full_voicing_observer test_full_voicing_observer.cc)

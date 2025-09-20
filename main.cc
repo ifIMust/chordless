@@ -8,10 +8,12 @@
 #include "settings/settings.h"
 
 #include <QApplication>
+#include <QCoreApplication>
 #include <QFont>
 #include <QLabel>
 #include <QQuickItem>
 #include <QQuickView>
+#include <QQmlEngine>
 
 #include <iostream>
 #include <memory>
@@ -62,9 +64,13 @@ int main(int argc, char **argv) {
   note_reader.start();
     
   QQuickView view;
-  qmlRegisterType<chordless::note::FullVoicingObserver>("com.chordless.note_observer", 1, 0, "NoteObserver");
-  qmlRegisterType<chordless::chord::ChordObserver>("com.chordless.chord_observer", 1, 0, "ChordObserver");
-  qmlRegisterType<chordless::settings::Settings>("com.chordless.settings", 1, 0, "Settings");
+
+  // Add QML import paths for our modules relative to executable
+  QQmlEngine *engine = view.engine();
+  QString execDir = QCoreApplication::applicationDirPath();
+  engine->addImportPath(execDir + "/note");
+  engine->addImportPath(execDir + "/chord");
+  engine->addImportPath(execDir + "/settings");
   view.setInitialProperties({
       {"note_obs", QVariant::fromValue(&full_voicing)},
       {"chord_obs", QVariant::fromValue(&chord_observer)},
