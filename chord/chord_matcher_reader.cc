@@ -7,23 +7,23 @@
 
 #include <boost/json.hpp>
 
-#include <filesystem>
-#include <fstream>
+#include <QFile>
+#include <QFileInfo>
 #include <iostream>
 #include <memory>
 
 namespace chordless::chord {
   void configureChordObserver(ChordObserver &observer, const std::string &file_name) {
-    // Slurp the file into a string/buffer
-    std::ifstream file(file_name);
-    if (!file.is_open()) {
+    // Slurp the file into a string/buffer using Qt's file API (supports qrc://)
+    QFile file(QString::fromStdString(file_name));
+    if (!file.open(QIODevice::ReadOnly)) {
       std::cerr << "Failed to read config file\n";
       return;
     }
 
-    const auto size = std::filesystem::file_size(file_name);
-    std::string json_data(size, '\0');
-    if (file.read(json_data.data(), size)) {
+    QByteArray file_data = file.readAll();
+    std::string json_data = file_data.toStdString();
+    if (!json_data.empty()) {
       try {
 	using namespace boost::json;
 	auto value = parse(json_data);

@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
       {"note_obs", QVariant::fromValue(&full_voicing)},
       {"chord_obs", QVariant::fromValue(&chord_observer)},
       {"settings", QVariant::fromValue(&settings)}});
-  view.setSource(QUrl::fromLocalFile("ui.qml"));
+  view.setSource(QUrl("qrc:/qt/qml/ui.qml"));
   view.show();
   
   return app.exec();

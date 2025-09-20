@@ -43,6 +43,19 @@ add_subdirectory(chord)
 add_subdirectory(settings)
 
 qt_add_executable(chordless main.cc)
+
+# Add QML files as resources
+qt_add_resources(chordless "qml"
+    PREFIX "/qt/qml"
+    FILES ui.qml
+)
+
+# Add resources for configuration files
+qt_add_resources(chordless "config"
+    PREFIX "/"
+    FILES chords.json
+)
+
 target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets Qt6::Quick note_reader note_state alsa_input full_voicing_observer scientific_note_namer chord_observer chord_matcher_reader settings)
 
 # Configure static linking and plugins for standalone deployment

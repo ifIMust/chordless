@@ -1,0 +1,1 @@
+- Always build the project using the cmake workflow for that build. Don't invoke make directly.

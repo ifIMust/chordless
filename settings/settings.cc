@@ -10,7 +10,7 @@ namespace chordless::settings {
     namespace po = boost::program_options;
     po::options_description desc("Usage");
     desc.add_options()
-      ("config,c", po::value<std::string>()->default_value("chords.json"),
+      ("config,c", po::value<std::string>()->default_value(":/chords.json"),
        "specify location of chords file")
       ("sharp,s", po::value<bool>()->default_value(true),
        "prefer sharps or flats (boolean)");
@@ -23,7 +23,7 @@ namespace chordless::settings {
       std::cerr << desc << std::endl;
       return 1;
     }
-    chords_file_ = std::filesystem::absolute(vm["config"].as<std::string>());
+    chords_file_ = vm["config"].as<std::string>();
     std::cout << "Using chord config file: " << chords_file_ << std::endl;
 
     sharp_ = vm["sharp"].as<bool>();
