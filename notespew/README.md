@@ -6,6 +6,22 @@ MIDI note generator for testing chordless.
 
 notespew creates an ALSA MIDI output port and generates 3 random notes every second. It's designed to provide test input for the chordless chord analyzer without requiring a physical MIDI device.
 
+## Dependencies
+
+notespew requires the ALSA utilities package which provides the `aconnect` command for MIDI connection management.
+
+### Installation
+
+**Debian/Ubuntu:**
+```bash
+sudo apt install alsa-utils
+```
+
+**Fedora:**
+```bash
+sudo dnf install alsa-utils
+```
+
 ## Build
 
 ```bash
