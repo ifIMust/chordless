@@ -64,3 +64,31 @@ TEST(ScientificNoteNamerTest, ExtremeOctaveValue) {
   // 255 % 12 = 3, which is D♯/E♭, so result should be "D♯₂₀"
   ASSERT_EQ(std::string("D♯\u2082\u2080"), namer.Name(0xFF, true));
 }
+
+// Test octave containing digit 3 (octave 13)
+TEST(ScientificNoteNamerTest, OctaveWithDigit3) {
+  chordless::note::ScientificNoteNamer namer;
+  // MIDI note 168 gives octave = (168/12) - 1 = 13
+  // 168 % 12 = 0, which is C, so result should be "C₁₃"
+  ASSERT_EQ(std::string("C\u2081\u2083"), namer.Name(168, true));
+}
+
+// Test octave containing digit 5 (octave 15)
+TEST(ScientificNoteNamerTest, OctaveWithDigit5) {
+  chordless::note::ScientificNoteNamer namer;
+  // For octave 15: MIDI note = (15 + 1) * 12 = 192
+  // 192 % 12 = 0, which is C
+  ASSERT_EQ(std::string("C\u2081\u2085"), namer.Name(192, true));
+}
+
+// Test octave containing digits 6 and 7 (octave 16 and 17)
+TEST(ScientificNoteNamerTest, OctaveWithDigits67) {
+  chordless::note::ScientificNoteNamer namer;
+  // For octave 16: MIDI note = (16 + 1) * 12 = 204
+  // 204 % 12 = 0, which is C, so result should be "C₁₆"
+  ASSERT_EQ(std::string("C\u2081\u2086"), namer.Name(204, true));
+
+  // For octave 17: MIDI note = (17 + 1) * 12 = 216
+  // 216 % 12 = 0, which is C, so result should be "C₁₇"
+  ASSERT_EQ(std::string("C\u2081\u2087"), namer.Name(216, true));
+}
