@@ -14,7 +14,7 @@ qt_add_qml_module(full_voicing_observer
 target_link_libraries(full_voicing_observer PRIVATE Qt6::Core basic_note_namer note_observer)
 
 add_executable(test_full_voicing_observer test_full_voicing_observer.cc)
-target_link_libraries(test_full_voicing_observer PRIVATE Qt6::Core Qt6::Test gtest_main full_voicing_observer note_state note_observer)
+target_link_libraries(test_full_voicing_observer PRIVATE Qt6::Core Qt6::Test gtest_main full_voicing_observer note_state note_observer scientific_note_namer)
 add_test(NAME full_voicing_observer_test COMMAND test_full_voicing_observer)
 
 add_library(note_event note_event.cc note_event.h)
