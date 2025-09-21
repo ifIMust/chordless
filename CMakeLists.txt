@@ -7,11 +7,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 add_compile_definitions(CHORDLESS_VERSION=${PROJECT_VERSION})
 
-# Configure static linking for standalone deployment
+# Configure build type specific settings
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     # Only link libgcc and libstdc++ statically, not system libraries like OpenGL
     set(BUILD_SHARED_LIBS OFF)
     set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
+elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    # Enable coverage for debug builds
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
 endif()
 
 # Set position independent code for all targets (needed for QML modules)
@@ -31,6 +35,29 @@ FetchContent_MakeAvailable(googletest)
 
 include(CTest)
 enable_testing()
+
+# Add coverage report target for debug builds
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    find_program(GCOV_PATH gcov)
+    if(GCOV_PATH)
+        add_custom_target(coverage
+            COMMAND ${CMAKE_COMMAND} -E echo "Running tests with coverage..."
+            COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
+            COMMAND ${CMAKE_COMMAND} -E echo "Generating coverage report..."
+            COMMAND find ${CMAKE_BINARY_DIR} -name "*.gcda" -exec ${GCOV_PATH} -r {} "\;"
+            COMMAND ${CMAKE_COMMAND} -E echo "Coverage files generated. Summary:"
+            COMMAND find ${CMAKE_BINARY_DIR} -name "*.gcov" -exec basename {} .gcov "\;" | sort -u | head -20
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            COMMENT "Generating coverage report"
+        )
+        add_custom_target(coverage-summary
+            COMMAND ${CMAKE_SOURCE_DIR}/coverage_summary.sh ${CMAKE_BINARY_DIR}
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            COMMENT "Coverage summary"
+            DEPENDS coverage
+        )
+    endif()
+endif()
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Test Quick Widgets)
 qt_standard_project_setup()
