@@ -14,5 +14,6 @@ namespace chordless::note {
 
   private:
     BasicNoteNamer base_namer_;
+    std::string OctaveToSubscript(int octave) noexcept;
   };
 }

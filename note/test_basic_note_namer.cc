@@ -36,3 +36,17 @@ TEST_F(NoteNameTest, NameLowBFl) {
   namer.SetSharp(false);
   ASSERT_EQ(std::string("B♭"), namer.Name(0x2e, false));
 }
+
+TEST_F(NoteNameTest, NameB) {
+  ASSERT_EQ(std::string("B"), namer.Name(0x47));  // MIDI note 71 (71 % 12 = 11)
+}
+
+TEST_F(NoteNameTest, NameFSharp) {
+  namer.SetSharp(true);
+  ASSERT_EQ(std::string("F♯"), namer.Name(0x42));  // MIDI note 66 (66 % 12 = 6)
+}
+
+TEST_F(NoteNameTest, NameGFlat) {
+  namer.SetSharp(false);
+  ASSERT_EQ(std::string("G♭"), namer.Name(0x42));  // MIDI note 66 (66 % 12 = 6)
+}

@@ -43,3 +43,24 @@ TEST(ScientificNoteNamerTest, NameHighestNote) {
   chordless::note::ScientificNoteNamer namer;
   ASSERT_EQ(std::string("G\u2089"), namer.Name(0x7F, true));
 }
+
+// Test octave 2 (common musical range)
+TEST(ScientificNoteNamerTest, NameOctave2) {
+  chordless::note::ScientificNoteNamer namer;
+  ASSERT_EQ(std::string("C\u2082"), namer.Name(0x24, true));  // MIDI note 36 (C2)
+}
+
+// Test SetSharp functionality with flats
+TEST(ScientificNoteNamerTest, SetSharpFunctionality) {
+  chordless::note::ScientificNoteNamer namer;
+  namer.SetSharp(false);
+  ASSERT_EQ(std::string("B\u266D\u2084"), namer.Name(0x46, false));  // MIDI note 70 (A#4/Bb4)
+}
+
+// Test extreme octave values (beyond normal MIDI range)
+TEST(ScientificNoteNamerTest, ExtremeOctaveValue) {
+  chordless::note::ScientificNoteNamer namer;
+  // MIDI note 255 would give octave = (255/12) - 1 = 20
+  // 255 % 12 = 3, which is D♯/E♭, so result should be "D♯₂₀"
+  ASSERT_EQ(std::string("D♯\u2082\u2080"), namer.Name(0xFF, true));
+}
