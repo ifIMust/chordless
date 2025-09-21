@@ -9,7 +9,7 @@ The initial project goals are partially completed.
 - Display currently "on" notes from a MIDI instrument (DONE)
 - Display chord names matching the note structure (DONE)
 - Flesh out supported chords with all typical chord types and inversions (IN PROGRESS)
-- Customize displayed info using GUI controls (NOT done)
+- Customize displayed info using GUI controls (IN PROGRESS - octave display toggle)
 - Conform to the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
 
 ## Compiling
@@ -91,15 +91,20 @@ Key components:
 
 ## Planned steps
 - Deploy as portable AppImage package that includes dependencies
-- Toggle numeric subscript visibility with a UI widget
 - Use a config file for general program settings
 
 ## Further work
 - Select key/mode, for improved chord naming/analysis.
 - JACK MIDI input
 - Sustain checkbox: Keep notes on, respecting sustain pedal.
-- Bass chords only
-  - Apply chord detection only to lowest matching pattern.
-  - Would match chords to the prevailing harmony (left hand) without being muddled by the melody (right hand).
-  - Control this setting with a UI widget.
+- Bass chords only (relaxed chord matching)
+  - Current behavior: All notes must exactly match a chord pattern for recognition
+  - Proposed behavior: Starting from the lowest note, analyze ascending notes until the first non-matching note is encountered
+  - If the subset of matching notes forms a valid chord, recognize it regardless of additional higher notes
+  - Benefits:
+    - Recognizes left-hand harmony even when right-hand melody adds non-chord tones
+    - Allows chord recognition with passing tones, grace notes, or melodic embellishments
+    - Maintains focus on the underlying harmonic structure rather than surface-level note combinations
+  - Example: Playing C-E-G-A-D would recognize "C major" from the bass notes C-E-G, ignoring the melody notes A-D
+  - Control this setting with a UI widget
 
