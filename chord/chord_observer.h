@@ -35,13 +35,14 @@ namespace chordless {
 
       static std::bitset<::chordless::note::kNumNotes> UniqueNotes(const std::bitset<::chordless::note::kNumNotes> &n);
 
+      Chord SelectBestChord(const std::vector<Chord>& chords) const;
+
       QString text() const { return text_; }
       
       ChordObserver(const ChordObserver&) = delete;
       ChordObserver& operator=(const ChordObserver&) = delete;
     
     private:
-      Chord SelectBestChord(const std::vector<Chord>& chords) const;
 
       std::vector<std::unique_ptr<ChordMatcher>> matchers_;
       const ::chordless::note::NoteState &note_state_;
