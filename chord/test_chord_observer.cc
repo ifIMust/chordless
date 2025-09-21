@@ -134,3 +134,22 @@ TEST_F(ChordObserverTest, UniqueNotesCMaj7) {
   auto u = chordless::chord::ChordObserver::UniqueNotes(note_state.GetBits());
   EXPECT_EQ(4, u.count());
 }
+
+TEST_F(ChordObserverTest, FindRootNoteWhenLowestNoteIsNotZero) {
+  // Tests the bit-shifting logic in OnNoteChange() that finds the root note
+  // when the lowest active note is not MIDI note 0
+  note_state.NoteOn(2);   // D (root)
+  note_state.NoteOn(6);   // F#
+  note_state.NoteOn(9);   // A
+
+  auto matcher(std::make_unique<chordless::chord::ChordMatcher>());
+  matcher->SetConfig(config_factory.MakeConfig(chordless::chord::ChordType::MAJOR_TRIAD));
+  observer.AddMatcher(std::move(matcher));
+  observer.OnNoteChange();
+
+  // Should identify D as the root and display "D major"
+  const QString expected("D ");
+  ASSERT_EQ(1, spy.count());
+  EXPECT_EQ(expected, observer.text());
+}
+
