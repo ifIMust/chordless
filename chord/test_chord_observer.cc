@@ -264,6 +264,108 @@ TEST_F(ChordObserverTest, SetBestChordOnlyEnabled) {
   EXPECT_EQ(expected, observer.text());
 }
 
+TEST_F(ChordObserverTest, SetSharp) {
+  // Test SetSharp method
+  observer.SetSharp(true);
+
+  note_state.NoteOn(1);  // C#
+  note_state.NoteOn(5);  // F
+  note_state.NoteOn(8);  // G#
+
+  auto matcher(std::make_unique<chordless::chord::ChordMatcher>());
+  auto config = std::make_unique<chordless::chord::ChordMatcherConfig>();
+  config->name = "Major";
+  config->suffix = "";
+  chordless::chord::ChordPattern pattern;
+  pattern.num_notes = 3;
+  pattern.pattern.set(0);
+  pattern.pattern.set(4);
+  pattern.pattern.set(7);
+  config->patterns.push_back(std::move(pattern));
+  matcher->SetConfig(std::move(config));
+  observer.AddMatcher(std::move(matcher));
+
+  observer.OnNoteChange();
+
+  // Should show C# (with sharp)
+  EXPECT_TRUE(observer.text().contains("C♯") || observer.text().contains("C#"));
+
+  // Now test with flats
+  observer.SetSharp(false);
+  observer.OnNoteChange();
+
+  // Should show Db (with flat)
+  EXPECT_TRUE(observer.text().contains("D♭") || observer.text().contains("Db"));
+}
+
+TEST_F(ChordObserverTest, SetBestChordOnlyToggle) {
+  // Test toggling best chord only on and off multiple times
+  // We'll verify by checking the behavior rather than the private member
+
+  note_state.NoteOn(0);  // C
+  note_state.NoteOn(4);  // E
+  note_state.NoteOn(7);  // G
+  note_state.NoteOn(9);  // A (makes it C6)
+
+  // Create matchers for both C and C6
+  auto major_config = std::make_unique<chordless::chord::ChordMatcherConfig>();
+  major_config->suffix = "";
+  chordless::chord::ChordPattern major_pattern;
+  major_pattern.num_notes = 3;
+  major_pattern.pattern.set(0);
+  major_pattern.pattern.set(4);
+  major_pattern.pattern.set(7);
+  major_config->patterns.push_back(std::move(major_pattern));
+
+  auto c6_config = std::make_unique<chordless::chord::ChordMatcherConfig>();
+  c6_config->suffix = "⁶";
+  chordless::chord::ChordPattern c6_pattern;
+  c6_pattern.num_notes = 4;
+  c6_pattern.pattern.set(0);
+  c6_pattern.pattern.set(4);
+  c6_pattern.pattern.set(7);
+  c6_pattern.pattern.set(9);
+  c6_config->patterns.push_back(std::move(c6_pattern));
+
+  auto major_matcher(std::make_unique<chordless::chord::ChordMatcher>());
+  major_matcher->SetConfig(std::move(major_config));
+  observer.AddMatcher(std::move(major_matcher));
+
+  auto c6_matcher(std::make_unique<chordless::chord::ChordMatcher>());
+  c6_matcher->SetConfig(std::move(c6_config));
+  observer.AddMatcher(std::move(c6_matcher));
+
+  // Test with best chord only OFF (default)
+  observer.SetBestChordOnly(false);
+  observer.OnNoteChange();
+  QString result1 = observer.text();
+  EXPECT_TRUE(result1.contains("C")) << "Result: " << result1.toStdString();
+  EXPECT_TRUE(result1.contains("⁶")) << "Result: " << result1.toStdString();
+
+  // Test with best chord only ON
+  observer.SetBestChordOnly(true);
+  observer.OnNoteChange();
+  QString result2 = observer.text();
+  EXPECT_EQ("C⁶ ", result2);
+
+  // Toggle back to OFF
+  observer.SetBestChordOnly(false);
+  observer.OnNoteChange();
+  QString result3 = observer.text();
+  EXPECT_TRUE(result3.contains("C")) << "Result: " << result3.toStdString();
+  EXPECT_TRUE(result3.contains("⁶")) << "Result: " << result3.toStdString();
+}
+
+TEST_F(ChordObserverTest, EmptyNoteStateWithBestChordOnly) {
+  observer.SetBestChordOnly(true);
+
+  // No notes pressed
+  observer.OnNoteChange();
+
+  EXPECT_EQ("", observer.text());
+  EXPECT_EQ(1, spy.count());
+}
+
 TEST_F(ChordObserverTest, SetBestChordOnlyDisabled) {
   observer.SetBestChordOnly(false);
 
