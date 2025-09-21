@@ -9,18 +9,18 @@ namespace chordless::settings {
   class Settings : public QObject {
     Q_OBJECT
     QML_ELEMENT
-    Q_PROPERTY(bool sharp READ sharp WRITE setSharp NOTIFY sharpChanged)
+    Q_PROPERTY(bool sharp READ Sharp WRITE SetSharp NOTIFY SharpChanged)
 
   public:
     int ReadConfiguration(int argc, char **argv);
 
     const std::string& ChordsFile() const noexcept;
-    
-    bool sharp() const noexcept;
-    void setSharp(bool sharp) noexcept;
-	       
+
+    bool Sharp() const noexcept;
+    void SetSharp(bool sharp) noexcept;
+
   signals:
-    void sharpChanged(bool);
+    void SharpChanged(bool);
       
   private:
     bool sharp_ {true};

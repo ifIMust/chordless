@@ -36,21 +36,21 @@ namespace chordless::settings {
     sharp_ = vm["sharp"].as<bool>();
 
     // Set initial state for sharp observers
-    emit sharpChanged(sharp_);
-    
+    emit SharpChanged(sharp_);
+
     return 0;
   }
 
   const std::string& Settings::ChordsFile() const noexcept {
     return chords_file_;
   }
-  
-  bool Settings::sharp() const noexcept {
+
+  bool Settings::Sharp() const noexcept {
     return sharp_;
   }
 
-  void Settings::setSharp(bool sharp) noexcept {
+  void Settings::SetSharp(bool sharp) noexcept {
     sharp_ = sharp;
-    emit sharpChanged(sharp_);
+    emit SharpChanged(sharp_);
   }
 }
