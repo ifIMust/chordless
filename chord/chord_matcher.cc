@@ -19,7 +19,7 @@ namespace chordless::chord {
     for (const auto chord_pattern : config_->patterns) {
       if ((num_notes == chord_pattern.num_notes) &&
 	  (rooted_notes & chord_pattern.pattern) == chord_pattern.pattern) {
-	chords.push_back(Chord{tonic_note, config_->suffix});
+	chords.push_back(Chord{tonic_note, config_->suffix, chord_pattern.num_notes});
 	break;
       }
     }

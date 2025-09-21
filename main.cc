@@ -61,6 +61,7 @@ int main(int argc, char **argv) {
 
   chordless::chord::ConfigureChordObserver(chord_observer, settings.ChordsFile());
 
+
   note_reader.start();
     
   QQuickView view;

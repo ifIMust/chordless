@@ -51,8 +51,13 @@ namespace chordless::chord {
 	all_chords.insert(all_chords.cend(), chords.cbegin(), chords.cend());
       }
 
-      for (auto c : all_chords) {
-	ss << note_namer_->Name(c.tonic_note) << c.suffix << " ";
+      if (best_chord_only_ && !all_chords.empty()) {
+        auto best_chord = SelectBestChord(all_chords);
+        ss << note_namer_->Name(best_chord.tonic_note) << best_chord.suffix << " ";
+      } else {
+        for (auto c : all_chords) {
+          ss << note_namer_->Name(c.tonic_note) << c.suffix << " ";
+        }
       }
     }
     text_ = ss.str().c_str();
@@ -61,6 +66,23 @@ namespace chordless::chord {
 
   void ChordObserver::SetSharp(bool sharp) noexcept {
     note_namer_->SetSharp(sharp);
+  }
+
+  void ChordObserver::SetBestChordOnly(bool best_chord_only) noexcept {
+    best_chord_only_ = best_chord_only;
+  }
+
+  Chord ChordObserver::SelectBestChord(const std::vector<Chord>& chords) const {
+    if (chords.empty()) return {0, "", 0};
+
+    Chord best_chord = chords[0];
+    for (const auto& chord : chords) {
+      if (chord.num_notes > best_chord.num_notes) {
+        best_chord = chord;
+      }
+    }
+
+    return best_chord;
   }
 
   void ChordObserver::AddMatcher(std::unique_ptr<ChordMatcher> &&matcher) {

@@ -13,7 +13,9 @@ namespace chordless::settings {
       ("config,c", po::value<std::string>(),
        "specify location of chords file")
       ("sharp,s", po::value<bool>()->default_value(true),
-       "prefer sharps or flats (boolean)");
+       "prefer sharps or flats (boolean)")
+      ("best-chord,b", po::value<bool>()->default_value(false),
+       "show only the best chord match (boolean)");
   
     po::variables_map vm;
     try {
@@ -34,9 +36,11 @@ namespace chordless::settings {
     }
 
     sharp_ = vm["sharp"].as<bool>();
+    best_chord_only_ = vm["best-chord"].as<bool>();
 
-    // Set initial state for sharp observers
+    // Set initial state for observers
     emit SharpChanged(sharp_);
+    emit BestChordOnlyChanged(best_chord_only_);
 
     return 0;
   }
@@ -52,5 +56,14 @@ namespace chordless::settings {
   void Settings::SetSharp(bool sharp) noexcept {
     sharp_ = sharp;
     emit SharpChanged(sharp_);
+  }
+
+  bool Settings::BestChordOnly() const noexcept {
+    return best_chord_only_;
+  }
+
+  void Settings::SetBestChordOnly(bool best_chord_only) noexcept {
+    best_chord_only_ = best_chord_only;
+    emit BestChordOnlyChanged(best_chord_only_);
   }
 }

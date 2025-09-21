@@ -63,6 +63,22 @@ Rectangle {
             }
 
             CheckBox {
+                id: bestChordOnlyCheckBox
+                visible: true
+                text: qsTr("Best Only")
+                checked: settings.bestChordOnly
+                onCheckedChanged: {
+                    settings.bestChordOnly = checked;
+                    chord_obs.SetBestChordOnly(checked);
+                }
+                hoverEnabled: true
+                ToolTip.delay: 700
+                ToolTip.timeout: 4000
+                ToolTip.visible: hovered
+                ToolTip.text: qsTr("Show only the best chord match instead of all matches")
+            }
+
+            CheckBox {
                 id: sustainCheckBox
 		visible: false
                 text: qsTr("Sustain Pedal")

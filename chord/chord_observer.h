@@ -29,6 +29,7 @@ namespace chordless {
     
       void OnNoteChange() noexcept override;
       Q_INVOKABLE void SetSharp(bool) noexcept;
+      Q_INVOKABLE void SetBestChordOnly(bool best_chord_only) noexcept;
       
       void AddMatcher(std::unique_ptr<ChordMatcher> &&matcher);
 
@@ -40,10 +41,13 @@ namespace chordless {
       ChordObserver& operator=(const ChordObserver&) = delete;
     
     private:
+      Chord SelectBestChord(const std::vector<Chord>& chords) const;
+
       std::vector<std::unique_ptr<ChordMatcher>> matchers_;
       const ::chordless::note::NoteState &note_state_;
       std::unique_ptr<note::NoteNamer> note_namer_;
       QString text_;
+      bool best_chord_only_ {false};
     };
   }
 }
