@@ -48,4 +48,8 @@ namespace chordless::note {
   void ScientificNoteNamer::SetSharp(bool sharp) noexcept {
     base_namer_.SetSharp(sharp);
   }
+
+  bool ScientificNoteNamer::GetSharp() const noexcept {
+    return base_namer_.GetSharp();
+  }
 }

@@ -9,6 +9,7 @@ namespace chordless::note {
   public:
     std::string Name(unsigned char note, bool sharp = true) noexcept override;
     void SetSharp(bool) noexcept override;
+    bool GetSharp() const noexcept override;
 
   private:
     bool sharp_ {true};

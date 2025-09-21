@@ -12,20 +12,20 @@ Rectangle {
     required property Settings settings
 
     id: rectangle
-    width: 500
-    height: 216
+    width: 600
+    height: 280
 
     Flow {
         id: flow1
         x: 0
         y: 0
-        width: 500
-        height: 216
+        width: 600
+        height: 280
 
         Row {
             id: row
-            width: 584
-            height: 48
+            width: 580
+            height: 64
 
             ComboBox {
                 id: sharpsComboBox
@@ -51,9 +51,10 @@ Rectangle {
 
             CheckBox {
                 id: octaveCheckBox
-		visible: false
-                text: qsTr("Show Octave")
-                checked: true
+		visible: true
+                text: qsTr("Octave")
+                checked: note_obs.showOctave
+                onCheckedChanged: note_obs.setShowOctave(checked)
                 hoverEnabled: true
                 ToolTip.delay: 700
                 ToolTip.timeout: 4000

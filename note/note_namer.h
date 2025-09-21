@@ -8,5 +8,6 @@ namespace chordless::note {
     virtual std::string Name(unsigned char note, bool sharp = true) noexcept = 0;
 
     virtual void SetSharp(bool) noexcept = 0;
+    virtual bool GetSharp() const noexcept = 0;
   };
 }

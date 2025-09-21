@@ -20,8 +20,8 @@
 #include <string>
 #include <utility>
 
-constexpr int window_w = 498;
-constexpr int window_h = 128;
+constexpr int window_w = 600;
+constexpr int window_h = 280;
 
 constexpr int full_voice_label_x = 10;
 constexpr int full_voice_label_y = 10;
@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
   chordless::settings::Settings settings;
   
   chordless::note::FullVoicingObserver full_voicing(note_state);
-  full_voicing.SetNoteNamer(std::make_unique<chordless::note::ScientificNoteNamer>());
+  full_voicing.setShowOctave(true);  // Default to showing octaves in the app
   note_reader.AddObserver(full_voicing);
   
   chordless::chord::ChordObserver chord_observer(note_state);

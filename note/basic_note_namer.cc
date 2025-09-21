@@ -35,4 +35,8 @@ namespace chordless::note {
   void BasicNoteNamer::SetSharp(bool sharp) noexcept {
     sharp_ = sharp;
   }
+
+  bool BasicNoteNamer::GetSharp() const noexcept {
+    return sharp_;
+  }
 }

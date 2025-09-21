@@ -11,7 +11,7 @@ qt_add_qml_module(full_voicing_observer
     RESOURCE_PREFIX /qt/qml
     SOURCES full_voicing_observer.cc full_voicing_observer.h note_observer.cc note_observer.h
 )
-target_link_libraries(full_voicing_observer PRIVATE Qt6::Core basic_note_namer note_observer)
+target_link_libraries(full_voicing_observer PRIVATE Qt6::Core basic_note_namer scientific_note_namer note_observer)
 
 add_executable(test_full_voicing_observer test_full_voicing_observer.cc)
 target_link_libraries(test_full_voicing_observer PRIVATE Qt6::Core Qt6::Test gtest_main full_voicing_observer note_state note_observer scientific_note_namer)
