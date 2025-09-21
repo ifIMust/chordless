@@ -21,3 +21,18 @@ TEST(NoteEventTest, NoteOffVelNonZero) {
   chordless::note::NoteEvent e(false, 0x77, 0x0F);
   EXPECT_EQ(chordless::note::NoteEventType::NOTE_OFF, e.type_);
 }
+
+TEST(NoteEventTest, MoveConstructor) {
+  chordless::note::NoteEvent source(true, 0x60, 0x7F);
+  chordless::note::NoteEvent moved(std::move(source));
+  EXPECT_EQ(chordless::note::NoteEventType::NOTE_ON, moved.type_);
+  EXPECT_EQ(0x60, moved.note_);
+}
+
+TEST(NoteEventTest, MoveAssignment) {
+  chordless::note::NoteEvent source(false, 0x64, 0x40);
+  chordless::note::NoteEvent target;
+  target = std::move(source);
+  EXPECT_EQ(chordless::note::NoteEventType::NOTE_OFF, target.type_);
+  EXPECT_EQ(0x64, target.note_);
+}

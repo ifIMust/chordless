@@ -87,6 +87,36 @@ This script will:
 
 ![chordless and aconnectgui](/screenshot.png?raw=true "Screenshot")
 
+## Development
+
+### Building for Development
+For development with debugging and testing:
+```bash
+cmake --workflow --preset debug
+```
+
+### Testing
+The project includes comprehensive unit tests using Google Test:
+```bash
+# Run all tests
+cmake --workflow --preset debug
+
+# Check test coverage (requires debug build)
+./coverage_summary.sh
+```
+
+### Architecture
+The codebase is organized into several modules:
+- **note/**: Note naming, event handling, and observation
+- **chord/**: Chord matching and analysis
+- **input/**: ALSA MIDI input handling
+- **settings/**: Configuration management
+
+Key components:
+- `NoteObserver`: Base class for note change notifications
+- `ChordMatcher`: Analyzes note patterns to identify chords
+- `ScientificNoteNamer`: Converts MIDI notes to scientific notation (e.g., "C₄")
+
 ## Planned steps
 - Deploy a package that includes most/all dependencies.
   - Create a .deb package.
