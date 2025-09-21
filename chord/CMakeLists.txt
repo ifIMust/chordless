@@ -19,8 +19,10 @@ qt_add_qml_module(chord_observer
     OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/com/chordless/chord_observer
     RESOURCE_PREFIX /qt/qml
     SOURCES chord_observer.cc chord_observer.h
+    DEPENDENCIES
+        com.chordless.note_observer
 )
-target_link_libraries(chord_observer PRIVATE Qt6::Core chord_matcher note_observer basic_note_namer)
+target_link_libraries(chord_observer PRIVATE Qt6::Core chord_matcher note_observer basic_note_namer full_voicing_observer)
 
 add_executable(test_chord_observer test_chord_observer.cc)
 target_link_libraries(test_chord_observer PRIVATE Qt6::Core Qt6::Test gtest_main chord_observer note_state chord_matcher chord_matcher_config_factory)
