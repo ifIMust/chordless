@@ -4,6 +4,6 @@
 
 namespace chordless::chord {
   class ChordObserver;
-  
-  void configureChordObserver(ChordObserver&, const std::string &file_name);
+
+  void ConfigureChordObserver(ChordObserver&, const std::string &file_name);
 }

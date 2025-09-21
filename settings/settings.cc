@@ -1,8 +1,8 @@
 #include "settings.h"
+#include "../logging.h"
 
 #include <boost/program_options.hpp>
 
-#include <iostream>
 #include <filesystem>
 
 namespace chordless::settings {
@@ -20,17 +20,17 @@ namespace chordless::settings {
       po::store(po::parse_command_line(argc, argv, desc), vm);
       po::notify(vm);
     } catch (...) {
-      std::cerr << desc << std::endl;
+      LOG_ERROR(configCategory, "Invalid command line options. Usage information available with --help");
       return 1;
     }
     if (vm.count("config")) {
       // User provided a config file - make it absolute for local files
       chords_file_ = std::filesystem::absolute(vm["config"].as<std::string>());
-      std::cout << "Using chord config file: " << chords_file_ << std::endl;
+      LOG_INFO(configCategory, "Using chord config file:" << chords_file_);
     } else {
       // Use embedded resource as default
       chords_file_ = ":/chords.json";
-      std::cout << "Using default chord config" << std::endl;
+      LOG_INFO(configCategory, "Using default chord config");
     }
 
     sharp_ = vm["sharp"].as<bool>();

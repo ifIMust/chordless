@@ -71,7 +71,7 @@ add_subdirectory(note)
 add_subdirectory(chord)
 add_subdirectory(settings)
 
-qt_add_executable(chordless main.cc)
+qt_add_executable(chordless main.cc logging.cpp logging.h)
 
 
 # Add QML files as resources

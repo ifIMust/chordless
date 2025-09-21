@@ -1,4 +1,5 @@
 #include "chord_matcher_reader.h"
+#include "../logging.h"
 
 #include "chord_matcher.h"
 #include "chord_matcher_config.h"
@@ -9,15 +10,14 @@
 
 #include <QFile>
 #include <QFileInfo>
-#include <iostream>
 #include <memory>
 
 namespace chordless::chord {
-  void configureChordObserver(ChordObserver &observer, const std::string &file_name) {
-    // Slurp the file into a string/buffer using Qt's file API (supports qrc://)
+  void ConfigureChordObserver(ChordObserver &observer, const std::string &file_name) {
+    // Load chord configuration from file (supports qrc:// resources)
     QFile file(QString::fromStdString(file_name));
     if (!file.open(QIODevice::ReadOnly)) {
-      std::cerr << "Failed to read config file\n";
+      LOG_ERROR(configCategory, "Failed to read chord config file:" << file_name);
       return;
     }
 
@@ -51,10 +51,10 @@ namespace chordless::chord {
 	  observer.AddMatcher(std::move(matcher));
 	}
       } catch (const std::exception &e) {
-	std::cerr << "Failed to parse JSON: " << e.what() << std::endl;
+        LOG_ERROR(configCategory, "Failed to parse chord configuration JSON:" << e.what());
       }
     } else {
-      std::cerr << "Failed to read file data as a string\n";
+      LOG_ERROR(configCategory, "Chord configuration file is empty");
     }
   }
 }

@@ -6,6 +6,7 @@
 #include "note/note_reader.h"
 #include "note/scientific_note_namer.h"
 #include "settings/settings.h"
+#include "logging.h"
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -15,7 +16,6 @@
 #include <QQuickView>
 #include <QQmlEngine>
 
-#include <iostream>
 #include <memory>
 #include <string>
 #include <utility>
@@ -34,11 +34,11 @@ constexpr int chord_label_w = full_voice_label_w;
 constexpr int chord_label_h = full_voice_label_h;
 
 int main(int argc, char **argv) {
-  std::cout << "chordless v" << CHORDLESS_VERSION << std::endl;
+  LOG_INFO(generalCategory, "chordless v" << CHORDLESS_VERSION);
 
   chordless::alsa::AlsaInput alsa_input;
   if (!alsa_input.IsValid()) {
-    std::cerr << "Failed to open ALSA sequencer/port" << std::endl;
+    LOG_ERROR(alsaCategory, "Failed to open ALSA sequencer/port");
     exit(EXIT_FAILURE);
   }
 
@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
     return config_result;
   }
 
-  chordless::chord::configureChordObserver(chord_observer, settings.ChordsFile());
+  chordless::chord::ConfigureChordObserver(chord_observer, settings.ChordsFile());
 
   note_reader.start();
     
