@@ -92,7 +92,7 @@ target_link_libraries(chordless PRIVATE Qt6::Core Qt6::Widgets Qt6::Quick note_r
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     # Import static plugins needed for QML and platform support
     qt_import_plugins(chordless
-        INCLUDE Qt6::QXcbIntegrationPlugin Qt6::QSvgPlugin
+        INCLUDE Qt6::QXcbIntegrationPlugin
     )
     # Strip symbols from release build:
     target_link_options(chordless PRIVATE -s)
