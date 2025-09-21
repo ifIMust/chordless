@@ -34,7 +34,7 @@ constexpr int chord_label_w = full_voice_label_w;
 constexpr int chord_label_h = full_voice_label_h;
 
 int main(int argc, char **argv) {
-  LOG_INFO(generalCategory, "chordless v" << CHORDLESS_VERSION);
+  LOG_INFO(generalCategory, "chordless v", CHORDLESS_VERSION);
 
   chordless::alsa::AlsaInput alsa_input;
   if (!alsa_input.IsValid()) {

@@ -17,7 +17,7 @@ namespace chordless::chord {
     // Load chord configuration from file (supports qrc:// resources)
     QFile file(QString::fromStdString(file_name));
     if (!file.open(QIODevice::ReadOnly)) {
-      LOG_ERROR(configCategory, "Failed to read chord config file:" << file_name);
+      LOG_ERROR(configCategory, "Failed to read chord config file: ", file_name);
       return;
     }
 
@@ -51,7 +51,7 @@ namespace chordless::chord {
 	  observer.AddMatcher(std::move(matcher));
 	}
       } catch (const std::exception &e) {
-        LOG_ERROR(configCategory, "Failed to parse chord configuration JSON:" << e.what());
+        LOG_ERROR(configCategory, "Failed to parse chord configuration JSON: ", e.what());
       }
     } else {
       LOG_ERROR(configCategory, "Chord configuration file is empty");

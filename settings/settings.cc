@@ -26,7 +26,7 @@ namespace chordless::settings {
     if (vm.count("config")) {
       // User provided a config file - make it absolute for local files
       chords_file_ = std::filesystem::absolute(vm["config"].as<std::string>());
-      LOG_INFO(configCategory, "Using chord config file:" << chords_file_);
+      LOG_INFO(configCategory, "Using chord config file: ", chords_file_);
     } else {
       // Use embedded resource as default
       chords_file_ = ":/chords.json";
