@@ -62,6 +62,8 @@ endif()
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Test Quick Widgets)
 qt_standard_project_setup()
 
+# Set policy to use new Boost finding mechanism
+cmake_policy(SET CMP0167 NEW)
 # Find Boost with specific components
 find_package(Boost REQUIRED COMPONENTS json program_options)
 add_subdirectory(input)
