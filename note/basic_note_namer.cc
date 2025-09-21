@@ -27,9 +27,9 @@ namespace chordless::note {
     case 10:
       return sharp_ ? std::string("A♯") : std::string("B♭");
     case 11:
+    default:
       return std::string("B");
-    };
-    return std::string("Impossible pitch");
+    }
   }
 
   void BasicNoteNamer::SetSharp(bool sharp) noexcept {
